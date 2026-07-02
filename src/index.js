@@ -1,0 +1,42 @@
+require('dotenv').config();
+const express = require('express');
+const cors = require('cors');
+const cookieParser = require('cookie-parser');
+const { sequelize } = require('./models');
+
+const app = express();
+const PORT = process.env.PORT || 5000;
+
+app.use(cors({
+  origin: true,
+  credentials: true
+}));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+
+// Base Route
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'UP', message: 'Internship Platform API is running.' });
+});
+
+// Sync Database and Start Server
+async function startServer() {
+  try {
+    await sequelize.authenticate();
+    console.log('Database connection established successfully.');
+    
+    // Sync models (creates tables if they don't exist)
+    await sequelize.sync({ alter: true });
+    console.log('Database synchronized successfully.');
+
+    app.listen(PORT, () => {
+      console.log(`Server is running on port ${PORT}`);
+    });
+  } catch (error) {
+    console.error('Unable to connect to the database:', error);
+    process.exit(1);
+  }
+}
+
+startServer();

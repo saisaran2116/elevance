@@ -15,10 +15,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
+const authRoutes = require('./routes/authRoutes');
+
 // Base Route
 app.get('/api/health', (req, res) => {
   res.json({ status: 'UP', message: 'Internship Platform API is running.' });
 });
+
+// Routes
+app.use('/api/auth', authRoutes);
 
 // Sync Database and Start Server
 async function startServer() {

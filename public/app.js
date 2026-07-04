@@ -29,13 +29,21 @@ document.addEventListener('DOMContentLoaded', () => {
 // Check if user has an active session
 async function checkAuthSession() {
   try {
+    // Try to load login history - if it succeeds, user is already logged in
     const response = await fetch('/api/auth/login-history');
     if (response.ok) {
       const data = await response.json();
       fullHistory = data.history || [];
+      
+      // Since login-history returned OK, user is authenticated. Let's try to infer user details.
+      // Wait, we can fetch profile details if we want, or reconstruct from history logs or first log.
+      // The backend doesn't have a direct profile endpoint, but the latest success log will have the user's latest login.
+      // We can also find user details from the first record or just mock/infer them.
+      // Wait, let's see if we should request the user info. Let's inspect the history response first.
       if (fullHistory.length > 0 && fullHistory[0].user) {
         currentUser = fullHistory[0].user;
       } else {
+        // Fallback: decode or read user info if available, or fetch a dummy to establish user details
         currentUser = {
           name: localStorage.getItem('user_name') || 'Registered User',
           email: localStorage.getItem('user_email') || 'user@example.com',
@@ -45,6 +53,7 @@ async function checkAuthSession() {
           currentPlan: localStorage.getItem('user_plan') || 'Free'
         };
       }
+      
       showProfilePage();
     } else {
       showAuthPage();
@@ -67,8 +76,11 @@ function switchTab(tabName) {
     sectionProfile.classList.remove('hidden');
     sectionAuth.classList.remove('active');
     sectionAuth.classList.add('hidden');
+    
+    // Update navigation states
     navBtnAuth.classList.remove('active');
     navBtnProfile.classList.add('active');
+    
     loadLoginHistory();
   }
 }
@@ -79,6 +91,7 @@ function showAuthPage() {
   sectionAuth.classList.remove('hidden');
   sectionProfile.classList.add('hidden');
   sectionProfile.classList.remove('active');
+  
   navBtnAuth.classList.add('active');
   navBtnProfile.classList.add('hidden');
   navBtnLogout.classList.add('hidden');
@@ -86,10 +99,13 @@ function showAuthPage() {
 
 function showProfilePage() {
   if (!currentUser) return;
+  
+  // Fill in profile information
   document.getElementById('user-display-name').textContent = currentUser.name;
   document.getElementById('user-display-email').textContent = currentUser.email;
   document.getElementById('user-display-phone').textContent = currentUser.phone || 'Not provided';
   document.getElementById('user-display-lang').textContent = getLanguageName(currentUser.language);
+  
   const premiumEl = document.getElementById('user-display-premium');
   if (currentUser.isPremium) {
     premiumEl.textContent = 'Premium Member';
@@ -98,26 +114,34 @@ function showProfilePage() {
     premiumEl.textContent = 'Free Member';
     premiumEl.className = 'meta-value';
   }
+  
   const planEl = document.getElementById('user-display-plan');
   planEl.textContent = currentUser.currentPlan || 'Free';
+  
+  // Save details in localStorage as fallback
   localStorage.setItem('user_name', currentUser.name);
   localStorage.setItem('user_email', currentUser.email);
   localStorage.setItem('user_phone', currentUser.phone || '');
   localStorage.setItem('user_language', currentUser.language || 'en');
   localStorage.setItem('user_premium', currentUser.isPremium);
   localStorage.setItem('user_plan', currentUser.currentPlan || 'Free');
+
+  // Toggle Visibility
   sectionAuth.classList.add('hidden');
   sectionAuth.classList.remove('active');
   sectionProfile.classList.add('active');
   sectionProfile.classList.remove('hidden');
+
   navBtnAuth.classList.remove('active');
   navBtnAuth.classList.add('hidden');
   navBtnProfile.classList.remove('hidden');
   navBtnProfile.classList.add('active');
   navBtnLogout.classList.remove('hidden');
+
   loadLoginHistory();
 }
 
+// Map short language codes to full names
 function getLanguageName(code) {
   const mapping = {
     en: 'English 🇺🇸',
@@ -130,10 +154,12 @@ function getLanguageName(code) {
   return mapping[code] || code;
 }
 
+// Switch between login and register sub-tabs inside Auth Card
 function setAuthMode(mode) {
   loginErrorAlert.classList.add('hidden');
   registerErrorAlert.classList.add('hidden');
   registerSuccessAlert.classList.add('hidden');
+
   if (mode === 'login') {
     tabBtnLogin.classList.add('active');
     tabBtnRegister.classList.remove('active');
@@ -150,51 +176,84 @@ function setAuthMode(mode) {
     formLogin.classList.remove('active');
   }
 }
+
+// Advanced Client-side Device Type Heuristics (Desktop vs Laptop vs Mobile)
 async function getDeviceType() {
   const ua = navigator.userAgent;
+  
+  // 1. Mobile Check
   if (/mobi|android|iphone|ipad|ipod|windows phone/i.test(ua)) {
     return 'mobile';
   }
+
+  // 2. Laptop Check using Battery Status API
   if (navigator.getBattery) {
     try {
       const battery = await navigator.getBattery();
+      
+      // On desktop, the battery API might report a fully charged (100% / 1.0) charging battery
+      // where chargingTime is 0 and dischargingTime is Infinity.
+      // If a battery exists and is discharging (charging is false), OR level is not exactly 1.0,
+      // OR dischargingTime is a finite number, then the device is highly likely a laptop.
       const isDesktopBattery = battery.charging === true && 
                                battery.level === 1 && 
                                battery.chargingTime === 0 && 
                                battery.dischargingTime === Infinity;
+                               
+      // Also combine with screen size heuristics
       const isLaptopScreen = window.screen.width <= 1600 && window.screen.height <= 1000;
       const hasTouch = navigator.maxTouchPoints > 0;
+      
       if (!isDesktopBattery || isLaptopScreen || hasTouch) {
         return 'laptop';
       }
-    } catch (e) {}
+    } catch (e) {
+      // API call failed/blocked, proceed to other heuristics
+    }
   }
+
+  // 3. Screen and Resolution Heuristic fallback
+  // Laptops usually have screens between 11" and 17" (typically 1280x800 up to 1920x1080)
+  // Large desktop monitors are often 1920x1080 or larger, but with high density/scaling
+  // We can check common laptop viewport sizes
   const isLikelyLaptop = window.screen.width >= 1024 && 
                          window.screen.width <= 1600 && 
                          window.screen.height <= 1050;
+                         
   if (isLikelyLaptop) {
     return 'laptop';
   }
+
   return 'desktop';
 }
 
+// Handle login submission
 async function submitLogin(e) {
   e.preventDefault();
   loginErrorAlert.classList.add('hidden');
+  
   const email = document.getElementById('login-email').value;
   const password = document.getElementById('login-password').value;
+  
+  // Spinner state
   const btn = document.getElementById('btn-login-submit');
   const btnOriginalText = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...`;
+
   try {
     const deviceType = await getDeviceType();
+    
     const response = await fetch('/api/auth/login', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ email, password, deviceType }),
     });
+
     const data = await response.json();
+    
     if (response.ok && data.success) {
       currentUser = data.user;
       showProfilePage();
@@ -204,6 +263,7 @@ async function submitLogin(e) {
       loginErrorAlert.classList.remove('hidden');
     }
   } catch (err) {
+    console.error('Login request error:', err);
     loginErrorAlert.textContent = 'Server connection failed. Please try again.';
     loginErrorAlert.classList.remove('hidden');
   } finally {
@@ -212,36 +272,49 @@ async function submitLogin(e) {
   }
 }
 
+// Handle registration submission
 async function submitRegister(e) {
   e.preventDefault();
   registerErrorAlert.classList.add('hidden');
   registerSuccessAlert.classList.add('hidden');
+
   const name = document.getElementById('register-name').value;
   const email = document.getElementById('register-email').value;
   const phone = document.getElementById('register-phone').value;
   const language = document.getElementById('register-language').value;
   const password = document.getElementById('register-password').value;
+
   const btn = document.getElementById('btn-register-submit');
   const btnOriginalText = btn.innerHTML;
   btn.disabled = true;
   btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Creating Account...`;
+
   try {
     const response = await fetch('/api/auth/register', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+      },
       body: JSON.stringify({ name, email, phone, language, password }),
     });
+
     const data = await response.json();
+
     if (response.ok && data.success) {
       registerSuccessAlert.textContent = 'Account created successfully! Switching to login...';
       registerSuccessAlert.classList.remove('hidden');
       formRegister.reset();
-      setTimeout(() => { setAuthMode('login'); }, 2000);
+      
+      // Auto switch to login tab after 2 seconds
+      setTimeout(() => {
+        setAuthMode('login');
+      }, 2000);
     } else {
       registerErrorAlert.textContent = data.message || 'Registration failed. Try again.';
       registerErrorAlert.classList.remove('hidden');
     }
   } catch (err) {
+    console.error('Registration request error:', err);
     registerErrorAlert.textContent = 'Server connection failed. Please try again.';
     registerErrorAlert.classList.remove('hidden');
   } finally {
@@ -250,4 +323,139 @@ async function submitRegister(e) {
   }
 }
 
-function loadLoginHistory() {}
+// Load and Display Login History
+async function loadLoginHistory() {
+  loginHistoryTbody.innerHTML = `
+    <tr>
+      <td colspan="5" class="table-loading-state">
+        <i class="fa-solid fa-circle-notch fa-spin table-spinner"></i>
+        <span>Retrieving security records...</span>
+      </td>
+    </tr>
+  `;
+  historyEmptyState.classList.add('hidden');
+
+  try {
+    const response = await fetch('/api/auth/login-history');
+    if (!response.ok) {
+      throw new Error('Failed to retrieve history');
+    }
+
+    const data = await response.json();
+    fullHistory = data.history || [];
+    renderHistoryTable(fullHistory);
+  } catch (error) {
+    console.error('Error loading history:', error);
+    loginHistoryTbody.innerHTML = `
+      <tr>
+        <td colspan="5" class="table-loading-state" style="color: var(--error);">
+          <i class="fa-solid fa-triangle-exclamation"></i>
+          <span>Failed to load security records.</span>
+        </td>
+      </tr>
+    `;
+  }
+}
+
+// Render records in table
+function renderHistoryTable(records) {
+  loginHistoryTbody.innerHTML = '';
+  
+  if (records.length === 0) {
+    historyEmptyState.classList.remove('hidden');
+    return;
+  }
+
+  historyEmptyState.classList.add('hidden');
+
+  records.forEach(log => {
+    const row = document.createElement('tr');
+    
+    // Device icon mapping
+    let deviceIcon = 'fa-desktop';
+    if (log.device === 'laptop') deviceIcon = 'fa-laptop';
+    else if (log.device === 'mobile') deviceIcon = 'fa-mobile-screen-button';
+    
+    const deviceBadge = `
+      <span class="device-badge">
+        <i class="fa-solid ${deviceIcon}"></i>
+        <span>${capitalizeFirstLetter(log.device)} (${log.os})</span>
+      </span>
+    `;
+
+    // Format date time
+    const timeFormatted = new Date(log.attemptTime).toLocaleString(undefined, {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+      second: '2-digit',
+    });
+
+    // Status badge
+    const isSuccess = log.status === 'Success';
+    const statusClass = isSuccess ? 'success' : 'failed';
+    const statusIcon = isSuccess ? 'fa-circle-check' : 'fa-circle-xmark';
+    const statusBadge = `
+      <span class="status-badge ${statusClass}">
+        <i class="fa-solid ${statusIcon}"></i>
+        <span>${log.status}</span>
+      </span>
+    `;
+
+    row.innerHTML = `
+      <td>${deviceBadge}</td>
+      <td>${log.browser}</td>
+      <td><code>${log.ipAddress}</code></td>
+      <td>${timeFormatted}</td>
+      <td>${statusBadge}</td>
+    `;
+    
+    loginHistoryTbody.appendChild(row);
+  });
+}
+
+// Local Search and Filter
+function filterHistory() {
+  const searchQuery = document.getElementById('search-history-input').value.toLowerCase();
+  const deviceFilter = document.getElementById('filter-device').value.toLowerCase();
+  const statusFilter = document.getElementById('filter-status').value; // Success, Failed
+
+  const filtered = fullHistory.filter(log => {
+    // Search match
+    const searchMatch = log.ipAddress.toLowerCase().includes(searchQuery) ||
+                        log.os.toLowerCase().includes(searchQuery) ||
+                        log.browser.toLowerCase().includes(searchQuery);
+
+    // Device match
+    const deviceMatch = !deviceFilter || log.device === deviceFilter;
+
+    // Status match
+    const statusMatch = !statusFilter || log.status === statusFilter;
+
+    return searchMatch && deviceMatch && statusMatch;
+  });
+
+  renderHistoryTable(filtered);
+}
+
+// Log out user
+async function handleLogout() {
+  // Clear localStorage variables
+  localStorage.clear();
+  
+  try {
+    await fetch('/api/auth/logout', { method: 'POST' });
+  } catch (err) {
+    console.error('Logout error:', err);
+  }
+  
+  // Re-verify auth session to redirect back
+  checkAuthSession();
+}
+
+function capitalizeFirstLetter(str) {
+  if (!str) return '';
+  return str.charAt(0).toUpperCase() + str.slice(1);
+}

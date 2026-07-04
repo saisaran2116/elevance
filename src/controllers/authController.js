@@ -120,7 +120,7 @@ async function register(req, res) {
  */
 async function login(req, res) {
   try {
-    const { email, password } = req.body;
+    const { email, password, deviceType } = req.body;
 
     // Validate request
     if (!email || !password) {
@@ -132,7 +132,8 @@ async function login(req, res) {
 
     // Parse UA and IP for login history
     const userAgent = req.headers['user-agent'] || '';
-    const { browser, os, device } = parseUserAgent(userAgent);
+    const { browser, os, device: uaDevice } = parseUserAgent(userAgent);
+    const device = (deviceType && ['desktop', 'laptop', 'mobile'].includes(deviceType)) ? deviceType : uaDevice;
     const ipAddress = req.headers['x-forwarded-for'] || req.ip || '127.0.0.1';
 
     // Find user

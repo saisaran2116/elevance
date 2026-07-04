@@ -178,4 +178,76 @@ async function getDeviceType() {
   return 'desktop';
 }
 
+async function submitLogin(e) {
+  e.preventDefault();
+  loginErrorAlert.classList.add('hidden');
+  const email = document.getElementById('login-email').value;
+  const password = document.getElementById('login-password').value;
+  const btn = document.getElementById('btn-login-submit');
+  const btnOriginalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Authenticating...`;
+  try {
+    const deviceType = await getDeviceType();
+    const response = await fetch('/api/auth/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password, deviceType }),
+    });
+    const data = await response.json();
+    if (response.ok && data.success) {
+      currentUser = data.user;
+      showProfilePage();
+      formLogin.reset();
+    } else {
+      loginErrorAlert.textContent = data.message || 'Login failed. Please verify credentials.';
+      loginErrorAlert.classList.remove('hidden');
+    }
+  } catch (err) {
+    loginErrorAlert.textContent = 'Server connection failed. Please try again.';
+    loginErrorAlert.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = btnOriginalText;
+  }
+}
+
+async function submitRegister(e) {
+  e.preventDefault();
+  registerErrorAlert.classList.add('hidden');
+  registerSuccessAlert.classList.add('hidden');
+  const name = document.getElementById('register-name').value;
+  const email = document.getElementById('register-email').value;
+  const phone = document.getElementById('register-phone').value;
+  const language = document.getElementById('register-language').value;
+  const password = document.getElementById('register-password').value;
+  const btn = document.getElementById('btn-register-submit');
+  const btnOriginalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Creating Account...`;
+  try {
+    const response = await fetch('/api/auth/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ name, email, phone, language, password }),
+    });
+    const data = await response.json();
+    if (response.ok && data.success) {
+      registerSuccessAlert.textContent = 'Account created successfully! Switching to login...';
+      registerSuccessAlert.classList.remove('hidden');
+      formRegister.reset();
+      setTimeout(() => { setAuthMode('login'); }, 2000);
+    } else {
+      registerErrorAlert.textContent = data.message || 'Registration failed. Try again.';
+      registerErrorAlert.classList.remove('hidden');
+    }
+  } catch (err) {
+    registerErrorAlert.textContent = 'Server connection failed. Please try again.';
+    registerErrorAlert.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = btnOriginalText;
+  }
+}
+
 function loadLoginHistory() {}

@@ -37,7 +37,109 @@
       </nav>
     </div>
   </header>
-  <main class="main-content">
+    <main class="main-content">
+    <!-- AUTH SECTION (Login / Register Card) -->
+    <section id="section-auth" class="section-container active">
+      <div class="auth-card glass-panel">
+        <div class="auth-tabs">
+          <button id="tab-btn-login" class="auth-tab active" onclick="setAuthMode('login')">Login</button>
+          <button id="tab-btn-register" class="auth-tab" onclick="setAuthMode('register')">Register</button>
+        </div>
+
+        <div id="auth-forms-container">
+          <!-- LOGIN FORM -->
+          <form id="form-login" class="auth-form active" onsubmit="submitLogin(event)">
+            <h2 class="form-title">Welcome Back</h2>
+            <p class="form-subtitle">Enter your credentials to access your dashboard.</p>
+            
+            <div id="login-error-alert" class="alert-box error hidden"></div>
+            
+            <div class="input-group">
+              <label for="login-email">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="login-email" required placeholder="name@example.com" autocomplete="email">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="login-password">Password</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-lock input-icon"></i>
+                <input type="password" id="login-password" required placeholder="••••••••" autocomplete="current-password">
+              </div>
+            </div>
+
+            <button type="submit" id="btn-login-submit" class="btn-primary">
+              <span>Sign In</span>
+              <i class="fa-solid fa-arrow-right-to-bracket"></i>
+            </button>
+          </form>
+
+          <!-- REGISTER FORM -->
+          <form id="form-register" class="auth-form hidden" onsubmit="submitRegister(event)">
+            <h2 class="form-title">Create Account</h2>
+            <p class="form-subtitle">Join the premium internship network today.</p>
+
+            <div id="register-error-alert" class="alert-box error hidden"></div>
+            <div id="register-success-alert" class="alert-box success hidden"></div>
+
+            <div class="input-group">
+              <label for="register-name">Full Name</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-user input-icon"></i>
+                <input type="text" id="register-name" required placeholder="Alex Mercer" autocomplete="name">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="register-email">Email Address</label>
+              <div class="input-wrapper">
+                <i class="fa-regular fa-envelope input-icon"></i>
+                <input type="email" id="register-email" required placeholder="alex@example.com" autocomplete="email">
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="register-phone">Phone Number</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-phone input-icon"></i>
+                <input type="tel" id="register-phone" placeholder="+1 (555) 000-0000" autocomplete="tel">
+              </div>
+            </div>
+
+            <div class="form-row">
+              <div class="input-group half-width">
+                <label for="register-language">Preferred Language</label>
+                <div class="select-wrapper">
+                  <select id="register-language">
+                    <option value="en" selected>English</option>
+                    <option value="es">Español</option>
+                    <option value="hi">हिन्दी</option>
+                    <option value="pt">Português</option>
+                    <option value="zh">中文</option>
+                    <option value="fr">Français</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="input-group half-width">
+                <label for="register-password">Password</label>
+                <div class="input-wrapper">
+                  <i class="fa-solid fa-lock input-icon"></i>
+                  <input type="password" id="register-password" required placeholder="••••••••" autocomplete="new-password">
+                </div>
+              </div>
+            </div>
+
+            <button type="submit" id="btn-register-submit" class="btn-primary">
+              <span>Create Account</span>
+              <i class="fa-solid fa-user-plus"></i>
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
   </main>
   <footer class="app-footer">
     <div class="footer-container">

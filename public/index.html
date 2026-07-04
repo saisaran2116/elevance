@@ -5,13 +5,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Elevance | Premium Internship Platform</title>
   <meta name="description" content="Elevance Internship Platform - Login Tracking and Premium Security Control Center. Monitor your account security and device logins.">
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome for Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Core Stylesheet -->
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <!-- Animated Background Canvas / Glowing Orbs -->
   <div class="bg-glow-container">
     <div class="glow-orb orb-1"></div>
     <div class="glow-orb orb-2"></div>
@@ -37,7 +41,8 @@
       </nav>
     </div>
   </header>
-    <main class="main-content">
+
+  <main class="main-content">
     <!-- AUTH SECTION (Login / Register Card) -->
     <section id="section-auth" class="section-container active">
       <div class="auth-card glass-panel">
@@ -140,12 +145,120 @@
         </div>
       </div>
     </section>
+
+    <!-- PROFILE SECTION -->
+    <section id="section-profile" class="section-container hidden">
+      <div class="profile-grid">
+        <!-- USER DETAILS CARD -->
+        <div class="profile-info-card glass-panel">
+          <div class="user-avatar-section">
+            <div class="avatar-ring">
+              <i class="fa-solid fa-user-graduate default-avatar"></i>
+            </div>
+            <h3 id="user-display-name" class="user-name-title">Loading User...</h3>
+            <p id="user-display-email" class="user-email-subtitle">user@example.com</p>
+          </div>
+          
+          <div class="user-meta-details">
+            <div class="meta-item">
+              <span class="meta-label"><i class="fa-solid fa-language"></i> Language</span>
+              <span id="user-display-lang" class="meta-value">English</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label"><i class="fa-solid fa-phone"></i> Phone</span>
+              <span id="user-display-phone" class="meta-value">Not provided</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label"><i class="fa-solid fa-crown"></i> Membership</span>
+              <span id="user-display-premium" class="meta-value badge-premium">Free Member</span>
+            </div>
+            <div class="meta-item">
+              <span class="meta-label"><i class="fa-solid fa-award"></i> Current Plan</span>
+              <span id="user-display-plan" class="meta-value badge-plan">Free</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- LOGIN HISTORY CARD -->
+        <div class="login-history-card glass-panel">
+          <div class="card-header">
+            <div class="header-titles">
+              <h2 class="section-heading"><i class="fa-solid fa-shield-halved"></i> Login History & Security</h2>
+              <p class="section-subheading">Review browser session history, operating systems, and IP locations for security checks.</p>
+            </div>
+            <button id="btn-refresh-history" class="btn-secondary" onclick="loadLoginHistory()">
+              <i class="fa-solid fa-arrows-rotate"></i> Refresh
+            </button>
+          </div>
+
+          <!-- FILTERS AND CONTROLS -->
+          <div class="history-controls">
+            <div class="search-box">
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+              <input type="text" id="search-history-input" placeholder="Search by IP, OS, or Browser..." oninput="filterHistory()">
+            </div>
+            
+            <div class="filter-dropdowns">
+              <div class="select-wrapper">
+                <select id="filter-device" onchange="filterHistory()">
+                  <option value="">All Devices</option>
+                  <option value="desktop">🖥️ Desktop</option>
+                  <option value="laptop">💻 Laptop</option>
+                  <option value="mobile">📱 Mobile</option>
+                </select>
+              </div>
+
+              <div class="select-wrapper">
+                <select id="filter-status" onchange="filterHistory()">
+                  <option value="">All Statuses</option>
+                  <option value="Success">Success</option>
+                  <option value="Failed">Failed</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <!-- HISTORY LIST / TABLE CONTAINER -->
+          <div class="table-container">
+            <table class="history-table">
+              <thead>
+                <tr>
+                  <th>Device / OS</th>
+                  <th>Browser</th>
+                  <th>IP Address</th>
+                  <th>Date & Time</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody id="login-history-tbody">
+                <tr>
+                  <td colspan="5" class="table-loading-state">
+                    <i class="fa-solid fa-circle-notch fa-spin table-spinner"></i>
+                    <span>Retrieving security records...</span>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Empty State -->
+          <div id="history-empty-state" class="empty-state hidden">
+            <i class="fa-solid fa-circle-info empty-icon"></i>
+            <h3>No login records found</h3>
+            <p>We couldn't find any login attempts matching your filter settings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
+
   <footer class="app-footer">
     <div class="footer-container">
       <p>&copy; 2026 Elevance Internship Platform. All security events are encrypted and logged.</p>
     </div>
   </footer>
+
+  <!-- Core Javascript -->
   <script src="app.js"></script>
 </body>
 </html>

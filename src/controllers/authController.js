@@ -211,6 +211,30 @@ async function login(req, res) {
   }
 }
 
+/**
+ * Get user login history
+ * @route GET /api/auth/login-history
+ */
+async function getLoginHistory(req, res) {
+  try {
+    const history = await LoginHistory.findAll({
+      where: { userId: req.user.id },
+      order: [['attemptTime', 'DESC']],
+    });
+
+    return res.status(200).json({
+      success: true,
+      history,
+    });
+  } catch (error) {
+    console.error('Error fetching login history:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error retrieving login history',
+    });
+  }
+}
+
 module.exports = {
   register,
   login,

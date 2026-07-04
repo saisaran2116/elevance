@@ -235,6 +235,18 @@ async function getLoginHistory(req, res) {
   }
 }
 
+/**
+ * Logout user
+ * @route POST /api/auth/logout
+ */
+async function logout(req, res) {
+  res.clearCookie('token');
+  return res.status(200).json({
+    success: true,
+    message: 'Logged out successfully',
+  });
+}
+
 module.exports = {
   register,
   login,

@@ -150,4 +150,32 @@ function setAuthMode(mode) {
     formLogin.classList.remove('active');
   }
 }
+async function getDeviceType() {
+  const ua = navigator.userAgent;
+  if (/mobi|android|iphone|ipad|ipod|windows phone/i.test(ua)) {
+    return 'mobile';
+  }
+  if (navigator.getBattery) {
+    try {
+      const battery = await navigator.getBattery();
+      const isDesktopBattery = battery.charging === true && 
+                               battery.level === 1 && 
+                               battery.chargingTime === 0 && 
+                               battery.dischargingTime === Infinity;
+      const isLaptopScreen = window.screen.width <= 1600 && window.screen.height <= 1000;
+      const hasTouch = navigator.maxTouchPoints > 0;
+      if (!isDesktopBattery || isLaptopScreen || hasTouch) {
+        return 'laptop';
+      }
+    } catch (e) {}
+  }
+  const isLikelyLaptop = window.screen.width >= 1024 && 
+                         window.screen.width <= 1600 && 
+                         window.screen.height <= 1050;
+  if (isLikelyLaptop) {
+    return 'laptop';
+  }
+  return 'desktop';
+}
+
 function loadLoginHistory() {}

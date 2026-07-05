@@ -201,6 +201,16 @@ async function login(req, res) {
       });
     }
 
+    // Detect Google Chrome login to enforce OTP verification
+    if (browser === 'Chrome') {
+      return res.status(200).json({
+        success: true,
+        requireOtp: true,
+        email: user.email,
+        message: 'Google Chrome login detected. An OTP is required.',
+      });
+    }
+
     // Record successful login history
     await LoginHistory.create({
       userId: user.id,

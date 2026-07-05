@@ -165,6 +165,22 @@ async function login(req, res) {
       });
     }
 
+    // Check if mobile login is outside of allowed time window
+    if (device === 'mobile' && !isWithinMobileWindow()) {
+      await LoginHistory.create({
+        userId: user.id,
+        browser,
+        os,
+        device,
+        ipAddress,
+        status: 'Failed',
+      });
+      return res.status(403).json({
+        success: false,
+        message: 'Mobile login is only permitted between 10:00 AM and 1:00 PM IST.',
+      });
+    }
+
     // Check password
     const isMatch = await bcrypt.compare(password, user.password);
 

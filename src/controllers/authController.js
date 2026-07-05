@@ -413,10 +413,55 @@ async function verifyLoginOTP(req, res) {
   }
 }
 
+/**
+ * Resend OTP code for Google Chrome login
+ * @route POST /api/auth/resend-otp
+ */
+async function resendLoginOTP(req, res) {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(404).json({
+        success: false,
+        message: 'Please provide email address',
+      });
+    }
+
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    const { generateOTP, sendEmail } = require('../utils/messagingService');
+    const otpCode = await generateOTP(email, 'email');
+    await sendEmail(
+      email,
+      'Your Elevance Login OTP',
+      `Your security verification OTP code is: ${otpCode}\n\nThis OTP is valid for 5 minutes.`
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: 'OTP resent successfully.',
+    });
+  } catch (error) {
+    console.error('OTP resend error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during OTP resend',
+    });
+  }
+}
+
 module.exports = {
   register,
   login,
   getLoginHistory,
   logout,
   verifyLoginOTP,
+  resendLoginOTP,
 };

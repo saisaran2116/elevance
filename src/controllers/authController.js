@@ -306,8 +306,111 @@ async function logout(req, res) {
  * @route POST /api/auth/verify-otp
  */
 async function verifyLoginOTP(req, res) {
-  // Placeholder implementation for Commit 6
-  return res.status(200).json({ success: true, message: 'OTP verification placeholder' });
+  try {
+    const { email, otp, deviceType } = req.body;
+
+    if (!email || !otp) {
+      return res.status(404).json({
+        success: false,
+        message: 'Please provide email and OTP code',
+      });
+    }
+
+    // Parse UA and IP for login history
+    const userAgent = req.headers['user-agent'] || '';
+    const { browser, os, device: uaDevice } = parseUserAgent(userAgent);
+    const device = (deviceType && ['desktop', 'laptop', 'mobile'].includes(deviceType)) ? deviceType : uaDevice;
+    const ipAddress = req.headers['x-forwarded-for'] || req.ip || '127.0.0.1';
+
+    // Find user
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found',
+      });
+    }
+
+    // Double check mobile login time window (just in case they bypass/delayed verifying)
+    if (device === 'mobile' && !isWithinMobileWindow()) {
+      await LoginHistory.create({
+        userId: user.id,
+        browser,
+        os,
+        device,
+        ipAddress,
+        status: 'Failed',
+      });
+      return res.status(403).json({
+        success: false,
+        message: 'Mobile login is only permitted between 10:00 AM and 1:00 PM IST.',
+      });
+    }
+
+    const { verifyOTP } = require('../utils/messagingService');
+    const isValid = await verifyOTP(email, 'email', otp);
+
+    if (!isValid) {
+      // Record failed login history
+      await LoginHistory.create({
+        userId: user.id,
+        browser,
+        os,
+        device,
+        ipAddress,
+        status: 'Failed',
+      });
+
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or expired verification code',
+      });
+    }
+
+    // Record successful login history
+    await LoginHistory.create({
+      userId: user.id,
+      browser,
+      os,
+      device,
+      ipAddress,
+      status: 'Success',
+    });
+
+    // Generate Token
+    const token = generateToken(user.id);
+
+    // Cookie Options
+    const cookieOptions = {
+      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
+      httpOnly: true,
+    };
+    if (process.env.NODE_ENV === 'production') {
+      cookieOptions.secure = true;
+    }
+
+    res.cookie('token', token, cookieOptions);
+
+    return res.status(200).json({
+      success: true,
+      token,
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        phone: user.phone,
+        language: user.language,
+        isPremium: user.isPremium,
+        currentPlan: user.currentPlan,
+      },
+    });
+  } catch (error) {
+    console.error('OTP verification error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during OTP verification',
+    });
+  }
 }
 
 module.exports = {

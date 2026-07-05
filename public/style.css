@@ -841,3 +841,34 @@ select:focus {
     align-self: flex-start;
   }
 }
+
+/* OTP Verification Form Styles */
+.otp-timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.otp-timer-container .btn-link {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: var(--transition-smooth);
+}
+
+.otp-timer-container .btn-link:hover {
+  color: var(--secondary-hover);
+}
+
+#otp-code {
+  letter-spacing: 0.25rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  text-align: center;
+}

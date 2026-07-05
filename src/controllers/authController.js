@@ -203,11 +203,19 @@ async function login(req, res) {
 
     // Detect Google Chrome login to enforce OTP verification
     if (browser === 'Chrome') {
+      const { generateOTP, sendEmail } = require('../utils/messagingService');
+      const otpCode = await generateOTP(user.email, 'email');
+      await sendEmail(
+        user.email,
+        'Your Elevance Login OTP',
+        `Your security verification OTP code is: ${otpCode}\n\nThis OTP is valid for 5 minutes.`
+      );
+
       return res.status(200).json({
         success: true,
         requireOtp: true,
         email: user.email,
-        message: 'Google Chrome login detected. An OTP is required.',
+        message: 'Google Chrome login detected. An OTP has been sent to your email.',
       });
     }
 

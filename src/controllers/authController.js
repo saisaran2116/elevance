@@ -301,9 +301,19 @@ async function logout(req, res) {
   });
 }
 
+/**
+ * Verify OTP code for Google Chrome login
+ * @route POST /api/auth/verify-otp
+ */
+async function verifyLoginOTP(req, res) {
+  // Placeholder implementation for Commit 6
+  return res.status(200).json({ success: true, message: 'OTP verification placeholder' });
+}
+
 module.exports = {
   register,
   login,
   getLoginHistory,
   logout,
+  verifyLoginOTP,
 };

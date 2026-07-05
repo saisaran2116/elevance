@@ -1,6 +1,9 @@
 // State variables
 let currentUser = null;
 let fullHistory = [];
+let otpEmail = null;
+let otpTimerInterval = null;
+let otpSecondsRemaining = 60;
 
 // DOM Elements
 const sectionAuth = document.getElementById('section-auth');
@@ -11,12 +14,20 @@ const navBtnLogout = document.getElementById('nav-btn-logout');
 
 const formLogin = document.getElementById('form-login');
 const formRegister = document.getElementById('form-register');
+const formOtp = document.getElementById('form-otp');
 const tabBtnLogin = document.getElementById('tab-btn-login');
 const tabBtnRegister = document.getElementById('tab-btn-register');
 
 const loginErrorAlert = document.getElementById('login-error-alert');
 const registerErrorAlert = document.getElementById('register-error-alert');
 const registerSuccessAlert = document.getElementById('register-success-alert');
+const otpErrorAlert = document.getElementById('otp-error-alert');
+const otpSuccessAlert = document.getElementById('otp-success-alert');
+
+const otpEmailDisplay = document.getElementById('otp-email-display');
+const otpTimerText = document.getElementById('otp-timer-text');
+const otpTimerSeconds = document.getElementById('otp-timer-seconds');
+const btnOtpResend = document.getElementById('btn-otp-resend');
 
 const loginHistoryTbody = document.getElementById('login-history-tbody');
 const historyEmptyState = document.getElementById('history-empty-state');
@@ -159,6 +170,11 @@ function setAuthMode(mode) {
   loginErrorAlert.classList.add('hidden');
   registerErrorAlert.classList.add('hidden');
   registerSuccessAlert.classList.add('hidden');
+  otpErrorAlert.classList.add('hidden');
+  otpSuccessAlert.classList.add('hidden');
+  formOtp.classList.add('hidden');
+  formOtp.classList.remove('active');
+  clearInterval(otpTimerInterval);
 
   if (mode === 'login') {
     tabBtnLogin.classList.add('active');

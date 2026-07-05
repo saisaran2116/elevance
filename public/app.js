@@ -271,9 +271,26 @@ async function submitLogin(e) {
     const data = await response.json();
     
     if (response.ok && data.success) {
-      currentUser = data.user;
-      showProfilePage();
-      formLogin.reset();
+      if (data.requireOtp) {
+        // Transition to OTP screen
+        formLogin.classList.add('hidden');
+        formLogin.classList.remove('active');
+        formOtp.classList.add('active');
+        formOtp.classList.remove('hidden');
+        
+        otpEmail = email;
+        otpEmailDisplay.textContent = email;
+        
+        // Start countdown timer (defined in next commit)
+        if (typeof startOtpCountdown === 'function') {
+          startOtpCountdown();
+        }
+        formLogin.reset();
+      } else {
+        currentUser = data.user;
+        showProfilePage();
+        formLogin.reset();
+      }
     } else {
       loginErrorAlert.textContent = data.message || 'Login failed. Please verify credentials.';
       loginErrorAlert.classList.remove('hidden');
@@ -285,6 +302,108 @@ async function submitLogin(e) {
   } finally {
     btn.disabled = false;
     btn.innerHTML = btnOriginalText;
+  }
+}
+
+// Handle OTP submission
+async function submitOTP(e) {
+  e.preventDefault();
+  otpErrorAlert.classList.add('hidden');
+  otpSuccessAlert.classList.add('hidden');
+
+  const otp = document.getElementById('otp-code').value;
+  if (!otp || otp.length !== 6) {
+    otpErrorAlert.textContent = 'Please enter a 6-digit OTP code.';
+    otpErrorAlert.classList.remove('hidden');
+    return;
+  }
+
+  const btn = document.getElementById('btn-otp-submit');
+  const btnOriginalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...`;
+
+  try {
+    const deviceType = await getDeviceType();
+    const response = await fetch('/api/auth/verify-otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: otpEmail, otp, deviceType }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      clearInterval(otpTimerInterval);
+      currentUser = data.user;
+      showProfilePage();
+      formOtp.reset();
+      setAuthMode('login');
+    } else {
+      otpErrorAlert.textContent = data.message || 'OTP verification failed. Please try again.';
+      otpErrorAlert.classList.remove('hidden');
+    }
+  } catch (err) {
+    console.error('OTP verification error:', err);
+    otpErrorAlert.textContent = 'Server connection failed. Please try again.';
+    otpErrorAlert.classList.remove('hidden');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = btnOriginalText;
+  }
+}
+
+// Start OTP resend countdown timer
+function startOtpCountdown() {
+  clearInterval(otpTimerInterval);
+  otpSecondsRemaining = 60;
+  
+  otpTimerText.classList.remove('hidden');
+  btnOtpResend.classList.add('hidden');
+  otpTimerSeconds.textContent = otpSecondsRemaining;
+
+  otpTimerInterval = setInterval(() => {
+    otpSecondsRemaining--;
+    otpTimerSeconds.textContent = otpSecondsRemaining;
+    
+    if (otpSecondsRemaining <= 0) {
+      clearInterval(otpTimerInterval);
+      otpTimerText.classList.add('hidden');
+      btnOtpResend.classList.remove('hidden');
+    }
+  }, 1000);
+}
+
+// Handle OTP resending
+async function resendOTP() {
+  otpErrorAlert.classList.add('hidden');
+  otpSuccessAlert.classList.add('hidden');
+  
+  try {
+    const response = await fetch('/api/auth/resend-otp', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email: otpEmail }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.success) {
+      otpSuccessAlert.textContent = 'A new security code has been sent to your email.';
+      otpSuccessAlert.classList.remove('hidden');
+      startOtpCountdown();
+    } else {
+      otpErrorAlert.textContent = data.message || 'Failed to resend OTP. Please try again.';
+      otpErrorAlert.classList.remove('hidden');
+    }
+  } catch (err) {
+    console.error('OTP resend request error:', err);
+    otpErrorAlert.textContent = 'Server connection failed. Please try again.';
+    otpErrorAlert.classList.remove('hidden');
   }
 }
 

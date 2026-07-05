@@ -81,6 +81,33 @@
             </button>
           </form>
 
+          <!-- OTP VERIFICATION FORM -->
+          <form id="form-otp" class="auth-form hidden" onsubmit="submitOTP(event)">
+            <h2 class="form-title">Verification Required</h2>
+            <p class="form-subtitle">Google Chrome login detected. Enter the OTP sent to <strong id="otp-email-display"></strong>.</p>
+            
+            <div id="otp-error-alert" class="alert-box error hidden"></div>
+            <div id="otp-success-alert" class="alert-box success hidden"></div>
+            
+            <div class="input-group">
+              <label for="otp-code">One-Time Password (OTP)</label>
+              <div class="input-wrapper">
+                <i class="fa-solid fa-shield-halved input-icon"></i>
+                <input type="text" id="otp-code" placeholder="123456" pattern="\d{6}" maxlength="6" autocomplete="one-time-code">
+              </div>
+            </div>
+
+            <button type="submit" id="btn-otp-submit" class="btn-primary">
+              <span>Verify and Login</span>
+              <i class="fa-solid fa-circle-check"></i>
+            </button>
+            
+            <div class="otp-timer-container">
+              <span id="otp-timer-text">Resend OTP in <strong id="otp-timer-seconds">60</strong>s</span>
+              <button type="button" id="btn-otp-resend" class="btn-link hidden" onclick="resendOTP()">Resend OTP</button>
+            </div>
+          </form>
+
           <!-- REGISTER FORM -->
           <form id="form-register" class="auth-form hidden" onsubmit="submitRegister(event)">
             <h2 class="form-title">Create Account</h2>

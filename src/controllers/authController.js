@@ -40,6 +40,26 @@ function parseUserAgent(userAgentString) {
   return { browser, os, device };
 }
 
+// Helper to check if current time is within 10:00 AM to 1:00 PM IST
+function isWithinMobileWindow() {
+  const now = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Kolkata',
+    hour12: false,
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  });
+  const formattedString = formatter.format(now);
+  const [hours, minutes, seconds] = formattedString.split(':').map(Number);
+  
+  const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+  const startSeconds = 10 * 3600; // 10:00:00 AM
+  const endSeconds = 13 * 3600;   // 01:00:00 PM
+  
+  return totalSeconds >= startSeconds && totalSeconds <= endSeconds;
+}
+
 /**
  * Register user
  * @route POST /api/auth/register

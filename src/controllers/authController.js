@@ -250,4 +250,6 @@ async function logout(req, res) {
 module.exports = {
   register,
   login,
+  getLoginHistory,
+  logout,
 };

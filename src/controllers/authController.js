@@ -521,9 +521,24 @@ async function forgotPassword(req, res) {
       target: email || phone,
     });
 
-    return res.status(501).json({
-      success: false,
-      message: 'Not implemented'
+    const { sendEmail, sendSMS } = require('../utils/messagingService');
+
+    if (email) {
+      await sendEmail(
+        user.email,
+        'Your Reset Password - Elevance',
+        `You requested a password reset. Your new temporary password is: ${newPassword}\n\nPlease log in using this temporary password and update it immediately.`
+      );
+    } else if (phone) {
+      await sendSMS(
+        user.phone,
+        `Your temporary password is: ${newPassword}`
+      );
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: `A temporary password has been sent to your registered ${email ? 'email address' : 'phone number'}.`,
     });
   } catch (error) {
     console.error('Forgot password error:', error);

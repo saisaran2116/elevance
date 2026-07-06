@@ -507,6 +507,15 @@ async function forgotPassword(req, res) {
       });
     }
 
+    const { generateCustomPassword } = require('../utils/passwordGenerator');
+    const newPassword = generateCustomPassword(12);
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+
+    user.password = hashedPassword;
+    await user.save();
+
     return res.status(501).json({
       success: false,
       message: 'Not implemented'

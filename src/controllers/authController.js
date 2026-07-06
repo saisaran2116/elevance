@@ -457,6 +457,25 @@ async function resendLoginOTP(req, res) {
   }
 }
 
+/**
+ * Request password reset
+ * @route POST /api/auth/forgot-password
+ */
+async function forgotPassword(req, res) {
+  try {
+    return res.status(501).json({
+      success: false,
+      message: 'Not implemented'
+    });
+  } catch (error) {
+    console.error('Forgot password error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during forgot password'
+    });
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -464,4 +483,5 @@ module.exports = {
   logout,
   verifyLoginOTP,
   resendLoginOTP,
+  forgotPassword,
 };

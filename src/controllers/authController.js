@@ -463,6 +463,15 @@ async function resendLoginOTP(req, res) {
  */
 async function forgotPassword(req, res) {
   try {
+    const { email, phone } = req.body;
+
+    if (!email && !phone) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide email or phone number',
+      });
+    }
+
     return res.status(501).json({
       success: false,
       message: 'Not implemented'

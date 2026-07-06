@@ -516,6 +516,11 @@ async function forgotPassword(req, res) {
     user.password = hashedPassword;
     await user.save();
 
+    await PasswordReset.create({
+      userId: user.id,
+      target: email || phone,
+    });
+
     return res.status(501).json({
       success: false,
       message: 'Not implemented'

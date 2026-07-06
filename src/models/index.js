@@ -6,6 +6,7 @@ const Resume = require('./Resume');
 const Post = require('./Post');
 const OTP = require('./OTP');
 const Friend = require('./Friend');
+const PasswordReset = require('./PasswordReset');
 
 // Associations
 User.hasMany(LoginHistory, { foreignKey: 'userId', as: 'loginHistories' });
@@ -19,6 +20,9 @@ Resume.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 User.hasMany(Post, { foreignKey: 'userId', as: 'posts' });
 Post.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+User.hasMany(PasswordReset, { foreignKey: 'userId', as: 'passwordResets' });
+PasswordReset.belongsTo(User, { foreignKey: 'userId', as: 'user' });
 
 // Self-referential relationship for Friends (user acts as either requester or receiver)
 User.belongsToMany(User, { 
@@ -36,5 +40,6 @@ module.exports = {
   Resume,
   Post,
   OTP,
-  Friend
+  Friend,
+  PasswordReset
 };

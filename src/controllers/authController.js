@@ -1,6 +1,7 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const { User, LoginHistory } = require('../models');
+const { User, LoginHistory, PasswordReset } = require('../models');
+const { Op } = require('sequelize');
 
 // Helper to sign JWT token
 function generateToken(id) {
@@ -483,6 +484,26 @@ async function forgotPassword(req, res) {
       return res.status(404).json({
         success: false,
         message: 'User not found',
+      });
+    }
+
+    const oneDayAgo = new Date(Date.now() - 24 * 60 * 60 * 1000);
+    const existingReset = await PasswordReset.findOne({
+      where: {
+        [Op.or]: [
+          { userId: user.id },
+          { target: email || phone }
+        ],
+        requestedAt: {
+          [Op.gt]: oneDayAgo
+        }
+      }
+    });
+
+    if (existingReset) {
+      return res.status(400).json({
+        success: false,
+        message: 'You can use this option only once per day.',
       });
     }
 

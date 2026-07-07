@@ -72,7 +72,13 @@ async function runTests() {
     if (res1.statusCode !== 200 || !res1.jsonData.success) {
       throw new Error('Test 1 failed: first forgot password request should succeed.');
     }
-    console.log('Test 1 Passed: Request succeeded.');
+    if (!res1.jsonData.password) {
+      throw new Error('Test 1 failed: expected password in response data');
+    }
+    if (!/^[a-zA-Z]+$/.test(res1.jsonData.password)) {
+      throw new Error(`Test 1 failed: password "${res1.jsonData.password}" should only contain letters`);
+    }
+    console.log('Test 1 Passed: Request succeeded and generated password was returned.');
 
     // Verify password was updated in DB
     const updatedUser = await User.findByPk(user.id);

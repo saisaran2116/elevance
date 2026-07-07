@@ -23,3 +23,10 @@ We have implemented a Forgot Password flow that allows users to reset their pass
 2. **Custom Password Generator**: Generates a secure random 12-character password with at least one uppercase letter, one lowercase letter, one number, and one special character.
 3. **1 Request/Day Rate Limit**: Restricts users to only 1 request per day (24-hour window) per user/identity. If a user attempts it more than once, it blocks the request and returns the warning message: `"You can use this option only once per day."`.
 4. **Verification**: Run `node src/utils/testForgotPassword.js` to run the automated test suite.
+
+## Day 6: Custom Password Generation & UI
+We have completed the Forgot Password feature by building the dedicated UI flow:
+1. **Dedicated UI Page**: Built `public/forgot-password.html` with a glassmorphism style card, email/phone selectors, and seamless redirection. Added an option to copy the generated password.
+2. **Strict Custom Password Generator**: Modified `generateCustomPassword` to generate passwords consisting **strictly of uppercase and lowercase letters** (no numbers or special characters are included).
+3. **Database Integration**: Plaintext passwords are automatically hashed with bcrypt, stored in the SQLite database, and returned in the HTTP response JSON to display on the client UI.
+4. **Verification**: Checked via automated tests and manual UI testing.

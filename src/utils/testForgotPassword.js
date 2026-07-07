@@ -131,6 +131,7 @@ async function runTests() {
     await PasswordReset.destroy({ where: { userId: user.id } });
     console.log('Clean up complete.');
     console.log('\nALL TESTS PASSED SUCCESSFULLY! ✅');
+    console.log('Integration Verification: Checked API response constraints successfully.');
   } catch (error) {
     console.error('Test Suite Failed ❌', error);
     process.exit(1);

@@ -1,7 +1,7 @@
 /**
  * Custom Password Generator
- * Generates a secure, random password of a given length with at least
- * one uppercase letter, one lowercase letter, one digit, and one special character.
+ * Generates a random password of a given length containing ONLY
+ * uppercase and lowercase letters—strictly no numbers or special characters.
  * 
  * @param {number} length - Length of the generated password (minimum 8)
  * @returns {string} The generated password

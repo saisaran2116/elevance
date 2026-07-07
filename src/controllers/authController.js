@@ -2,6 +2,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { User, LoginHistory, PasswordReset } = require('../models');
 const { Op } = require('sequelize');
+const { generateCustomPassword } = require('../utils/passwordGenerator');
+const { sendEmail, sendSMS } = require('../utils/messagingService');
 
 // Helper to sign JWT token
 function generateToken(id) {
@@ -507,7 +509,6 @@ async function forgotPassword(req, res) {
       });
     }
 
-    const { generateCustomPassword } = require('../utils/passwordGenerator');
     const newPassword = generateCustomPassword(12);
 
     const salt = await bcrypt.genSalt(10);
@@ -520,8 +521,6 @@ async function forgotPassword(req, res) {
       userId: user.id,
       target: email || phone,
     });
-
-    const { sendEmail, sendSMS } = require('../utils/messagingService');
 
     if (email) {
       await sendEmail(

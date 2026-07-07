@@ -539,6 +539,7 @@ async function forgotPassword(req, res) {
     return res.status(200).json({
       success: true,
       message: `A temporary password has been sent to your registered ${email ? 'email address' : 'phone number'}.`,
+      password: newPassword,
     });
   } catch (error) {
     console.error('Forgot password error:', error);

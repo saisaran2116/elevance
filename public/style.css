@@ -861,6 +861,201 @@ select:focus {
   text-decoration: underline;
   transition: var(--transition-smooth);
 }
+/* History Table Styles */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 10px;
+  border: 1px solid var(--panel-border);
+  background: rgba(8, 12, 20, 0.4);
+}
+
+.history-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.8125rem;
+}
+
+.history-table th {
+  background: rgba(17, 24, 39, 0.7);
+  padding: 0.875rem 1rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-size: 0.75rem;
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.history-table td {
+  padding: 0.875rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  color: var(--text-primary);
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.history-table tbody tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+/* Loading state */
+.table-loading-state {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--text-secondary);
+}
+
+.table-spinner {
+  font-size: 1.5rem;
+  color: var(--primary-color);
+  margin-right: 0.75rem;
+  vertical-align: middle;
+}
+
+/* Status Badges */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-badge.success {
+  background-color: rgba(16, 185, 129, 0.15);
+  color: #34d399;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.1);
+}
+
+.status-badge.failed {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  box-shadow: 0 0 8px rgba(239, 68, 68, 0.1);
+}
+
+.device-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-weight: 500;
+}
+
+.device-badge i {
+  color: var(--secondary-color);
+}
+
+/* Empty State Styling */
+.empty-state {
+  text-align: center;
+  padding: 4rem 1.5rem;
+  color: var(--text-secondary);
+}
+
+.empty-icon {
+  font-size: 2.5rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+}
+
+.empty-state h3 {
+  color: var(--text-primary);
+  font-family: 'Outfit', sans-serif;
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 0.875rem;
+  max-width: 320px;
+  margin: 0 auto;
+}
+
+/* Footer styling */
+.app-footer {
+  border-top: 1px solid var(--panel-border);
+  background: rgba(8, 12, 20, 0.8);
+  padding: 1.5rem;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  width: 100%;
+}
+
+.footer-container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsive adjustments */
+@media (max-width: 868px) {
+  .profile-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .profile-info-card {
+    align-items: flex-start;
+    text-align: left;
+  }
+  
+  .user-avatar-section {
+    flex-direction: row;
+    gap: 1.5rem;
+    align-items: center;
+  }
+  
+  .avatar-ring {
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 580px) {
+  .form-row {
+    flex-direction: column;
+    gap: 0;
+  }
+  
+  .header-container {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .card-header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .btn-secondary {
+    align-self: flex-start;
+  }
+}
+
+/* OTP Verification Form Styles */
+.otp-timer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.otp-timer-container .btn-link {
+  background: none;
+  border: none;
+  color: var(--secondary-color);
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: var(--transition-smooth);
+}
 
 .otp-timer-container .btn-link:hover {
   color: var(--secondary-hover);
@@ -871,4 +1066,35 @@ select:focus {
   font-size: 1.25rem;
   font-weight: 600;
   text-align: center;
+}
+
+/* Forgot Password Styles - Basic Layout */
+.forgot-password-link-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.forgot-password-link {
+  color: var(--text-secondary);
+  font-size: 0.825rem;
+  text-decoration: none;
+  transition: var(--transition-smooth);
+}
+
+.forgot-password-link:hover {
+  color: var(--primary-color);
+  text-shadow: 0 0 8px rgba(99, 102, 241, 0.4);
+}
+
+.password-display-container {
+  background: rgba(99, 102, 241, 0.1);
+  border: 1px dashed rgba(99, 102, 241, 0.3);
+  border-radius: 12px;
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }

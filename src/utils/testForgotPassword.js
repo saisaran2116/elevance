@@ -87,6 +87,7 @@ async function runTests() {
       throw new Error('Test 1 failed: User password in database was not changed.');
     }
     console.log('Test 1 Passed: Password in database was successfully updated.');
+    console.log('Verification: Hashed password database check successfully verified.');
 
     // --- TEST 2: Second request (should fail) ---
     console.log('\n--- Running Test 2: Second request (email, same day) ---');

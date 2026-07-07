@@ -25,6 +25,19 @@ async function runTests() {
     await sequelize.authenticate();
     await sequelize.sync();
 
+    console.log('\n--- Running Test: Custom Password Generator Constraints ---');
+    const { generateCustomPassword } = require('./passwordGenerator');
+    for (let i = 0; i < 100; i++) {
+      const pwd = generateCustomPassword(12);
+      if (pwd.length !== 12) {
+        throw new Error(`Password generator failed: expected length 12, got ${pwd.length}`);
+      }
+      if (!/^[a-zA-Z]+$/.test(pwd)) {
+        throw new Error(`Password generator failed: password "${pwd}" contains non-letter characters`);
+      }
+    }
+    console.log('Password Generator Passed: All 100 test passwords contain only letters and are of correct length.');
+
     console.log('\n--- Creating test user ---');
     const email = 'forgot-test@example.com';
     const phone = '+1234567890';

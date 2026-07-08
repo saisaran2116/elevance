@@ -1,0 +1,99 @@
+{
+  "logo": "ELEVANCE",
+  "nav": {
+    "access": "Acesso",
+    "profile": "Perfil e Segurança",
+    "logout": "Sair"
+  },
+  "auth": {
+    "tabs": {
+      "login": "Entrar",
+      "register": "Cadastrar"
+    },
+    "login": {
+      "title": "Bem-vindo de volta",
+      "subtitle": "Insira suas credenciais para acessar seu painel.",
+      "email_label": "Endereço de e-mail",
+      "email_placeholder": "nome@exemplo.com",
+      "password_label": "Senha",
+      "password_placeholder": "••••••••",
+      "forgot_password": "Esqueceu a senha?",
+      "submit_btn": "Entrar"
+    },
+    "otp": {
+      "title": "Verificação necessária",
+      "subtitle": "Login do Google Chrome detectado. Insira o OTP enviado para {{email}}.",
+      "otp_label": "Senha de uso único (OTP)",
+      "otp_placeholder": "123456",
+      "submit_btn": "Verificar e entrar",
+      "resend_prefix": "Reenviar OTP em ",
+      "resend_suffix": "s",
+      "resend_btn": "Reenviar OTP"
+    },
+    "register": {
+      "title": "Criar conta",
+      "subtitle": "Junte-se à rede de estágios premium hoje.",
+      "name_label": "Nome completo",
+      "name_placeholder": "Alex Mercer",
+      "email_label": "Endereço de e-mail",
+      "email_placeholder": "alex@exemplo.com",
+      "phone_label": "Número de telefone",
+      "phone_placeholder": "+1 (555) 000-0000",
+      "lang_label": "Idioma preferido",
+      "password_label": "Senha",
+      "password_placeholder": "••••••••",
+      "submit_btn": "Criar conta"
+    }
+  },
+  "profile": {
+    "loading": "Carregando usuário...",
+    "lang_label": "Idioma",
+    "phone_label": "Telefone",
+    "membership_label": "Assinatura",
+    "plan_label": "Plano atual",
+    "free_member": "Membro gratuito",
+    "premium_member": "Membro premium",
+    "not_provided": "Não fornecido",
+    "history_title": "Histórico de login e segurança",
+    "history_subtitle": "Revise o histórico de sessões do navegador, sistemas operacionais e locais de IP para verificações de segurança.",
+    "refresh_btn": "Atualizar",
+    "search_placeholder": "Pesquisar por IP, SO ou navegador...",
+    "devices": {
+      "all": "Todos os dispositivos",
+      "desktop": "Computador",
+      "laptop": "Notebook",
+      "mobile": "Celular"
+    },
+    "statuses": {
+      "all": "Todos os status",
+      "success": "Sucesso",
+      "failed": "Falhou"
+    },
+    "table": {
+      "device_os": "Dispositivo / SO",
+      "browser": "Navegador",
+      "ip": "Endereço IP",
+      "datetime": "Data e Hora",
+      "status": "Status",
+      "loading": "Recuperando registros de segurança...",
+      "failed": "Falha ao carregar registros de segurança.",
+      "empty_title": "Nenhum registro de login encontrado",
+      "empty_desc": "Não encontramos nenhuma tentativa de login correspondente às suas configurações de filtro."
+    }
+  },
+  "forgot": {
+    "tab_title": "Redefinir senha da conta",
+    "title": "Problemas para entrar?",
+    "subtitle": "Insira seu e-mail ou número de telefone registrado. Geraremos uma nova senha temporária segura para sua conta.",
+    "email_label": "Endereço de e-mail",
+    "email_placeholder": "nome@exemplo.com",
+    "phone_label": "Ou número de telefone",
+    "phone_placeholder": "+1 (555) 000-0000",
+    "submit_btn": "Gerar nova senha",
+    "back_link": "Voltar ao acesso",
+    "gen_password_title": "Senha gerada",
+    "copy_btn": "Copiar senha",
+    "copied_btn": "Copiado!"
+  },
+  "footer": "© 2026 Plataforma de estágio Elevance. Todos os eventos de segurança são criptografados e registrados."
+}

@@ -1,0 +1,99 @@
+{
+  "logo": "ELEVANCE",
+  "nav": {
+    "access": "Acceso",
+    "profile": "Perfil y Seguridad",
+    "logout": "Cerrar sesión"
+  },
+  "auth": {
+    "tabs": {
+      "login": "Iniciar sesión",
+      "register": "Registrarse"
+    },
+    "login": {
+      "title": "Bienvenido de nuevo",
+      "subtitle": "Ingrese sus credenciales para acceder a su panel.",
+      "email_label": "Dirección de correo electrónico",
+      "email_placeholder": "nombre@ejemplo.com",
+      "password_label": "Contraseña",
+      "password_placeholder": "••••••••",
+      "forgot_password": "¿Olvidó su contraseña?",
+      "submit_btn": "Iniciar sesión"
+    },
+    "otp": {
+      "title": "Verificación Requerida",
+      "subtitle": "Se detectó inicio de sesión desde Google Chrome. Ingrese el OTP enviado a {{email}}.",
+      "otp_label": "Contraseña de un solo uso (OTP)",
+      "otp_placeholder": "123456",
+      "submit_btn": "Verificar e iniciar sesión",
+      "resend_prefix": "Reenviar OTP en ",
+      "resend_suffix": "s",
+      "resend_btn": "Reenviar OTP"
+    },
+    "register": {
+      "title": "Crear cuenta",
+      "subtitle": "Únase a la red de pasantías premium hoy.",
+      "name_label": "Nombre completo",
+      "name_placeholder": "Alex Mercer",
+      "email_label": "Dirección de correo electrónico",
+      "email_placeholder": "alex@ejemplo.com",
+      "phone_label": "Número de teléfono",
+      "phone_placeholder": "+1 (555) 000-0000",
+      "lang_label": "Idioma preferido",
+      "password_label": "Contraseña",
+      "password_placeholder": "••••••••",
+      "submit_btn": "Crear cuenta"
+    }
+  },
+  "profile": {
+    "loading": "Cargando usuario...",
+    "lang_label": "Idioma",
+    "phone_label": "Teléfono",
+    "membership_label": "Membresía",
+    "plan_label": "Plan actual",
+    "free_member": "Miembro gratuito",
+    "premium_member": "Miembro premium",
+    "not_provided": "No provisto",
+    "history_title": "Historial de inicio de sesión y seguridad",
+    "history_subtitle": "Revise el historial de sesiones del navegador, los sistemas operativos y las ubicaciones de IP para controles de seguridad.",
+    "refresh_btn": "Actualizar",
+    "search_placeholder": "Buscar por IP, sistema operativo o navegador...",
+    "devices": {
+      "all": "Todos los dispositivos",
+      "desktop": "Escritorio",
+      "laptop": "Computadora portátil",
+      "mobile": "Móvil"
+    },
+    "statuses": {
+      "all": "Todos los estados",
+      "success": "Exitoso",
+      "failed": "Fallido"
+    },
+    "table": {
+      "device_os": "Dispositivo / SO",
+      "browser": "Navegador",
+      "ip": "Dirección IP",
+      "datetime": "Fecha y hora",
+      "status": "Estado",
+      "loading": "Recuperando registros de seguridad...",
+      "failed": "Error al cargar los registros de seguridad.",
+      "empty_title": "No se encontraron registros de inicio de sesión",
+      "empty_desc": "No pudimos encontrar ningún intento de inicio de sesión que coincida con su configuración de filtro."
+    }
+  },
+  "forgot": {
+    "tab_title": "Restablecer contraseña de cuenta",
+    "title": "¿Tiene problemas para iniciar sesión?",
+    "subtitle": "Ingrese su correo electrónico registrado o número de teléfono. Generaremos una nueva contraseña temporal segura para su cuenta.",
+    "email_label": "Dirección de correo electrónico",
+    "email_placeholder": "nombre@ejemplo.com",
+    "phone_label": "O número de teléfono",
+    "phone_placeholder": "+1 (555) 000-0000",
+    "submit_btn": "Generar nueva contraseña",
+    "back_link": "Volver al acceso",
+    "gen_password_title": "Contraseña generada",
+    "copy_btn": "Copiar contraseña",
+    "copied_btn": "¡Copiado!"
+  },
+  "footer": "© 2026 Plataforma de pasantías Elevance. Todos los eventos de seguridad están cifrados y registrados."
+}

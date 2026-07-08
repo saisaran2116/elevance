@@ -1,0 +1,99 @@
+{
+  "logo": "ELEVANCE",
+  "nav": {
+    "access": "पहुंच",
+    "profile": "प्रोफ़ाइल और सुरक्षा",
+    "logout": "लॉग आउट"
+  },
+  "auth": {
+    "tabs": {
+      "login": "लॉग इन",
+      "register": "रजिस्टर"
+    },
+    "login": {
+      "title": "स्वागत है",
+      "subtitle": "अपने डैशबोर्ड तक पहुँचने के लिए अपनी साख दर्ज करें।",
+      "email_label": "ईमेल पता",
+      "email_placeholder": "name@example.com",
+      "password_label": "पासवर्ड",
+      "password_placeholder": "••••••••",
+      "forgot_password": "पासवर्ड भूल गए?",
+      "submit_btn": "साइन इन करें"
+    },
+    "otp": {
+      "title": "सत्यापन आवश्यक",
+      "subtitle": "गूगल क्रोम लॉगिन का पता चला। {{email}} पर भेजा गया ओटीपी दर्ज करें।",
+      "otp_label": "वन-टाइम पासवर्ड (OTP)",
+      "otp_placeholder": "123456",
+      "submit_btn": "सत्यापित करें और लॉग इन करें",
+      "resend_prefix": "ओटीपी पुन: भेजें ",
+      "resend_suffix": " सेकंड में",
+      "resend_btn": "ओटीपी पुन: भेजें"
+    },
+    "register": {
+      "title": "खाता बनाएं",
+      "subtitle": "आज ही प्रीमियम इंटर्नशिप नेटवर्क से जुड़ें।",
+      "name_label": "पूरा नाम",
+      "name_placeholder": "एलेक्स मर्सर",
+      "email_label": "ईमेल पता",
+      "email_placeholder": "alex@example.com",
+      "phone_label": "फ़ोन नंबर",
+      "phone_placeholder": "+1 (555) 000-0000",
+      "lang_label": "पसंदीदा भाषा",
+      "password_label": "पासवर्ड",
+      "password_placeholder": "••••••••",
+      "submit_btn": "खाता बनाएं"
+    }
+  },
+  "profile": {
+    "loading": "उपयोगकर्ता लोड हो रहा है...",
+    "lang_label": "भाषा",
+    "phone_label": "फ़ोन",
+    "membership_label": "सदस्यता",
+    "plan_label": "वर्तमान प्लान",
+    "free_member": "नि:शुल्क सदस्य",
+    "premium_member": "प्रीमियम सदस्य",
+    "not_provided": "प्रदान नहीं किया गया",
+    "history_title": "लॉगिन इतिहास और सुरक्षा",
+    "history_subtitle": "सुरक्षा जांच के लिए ब्राउज़र सत्र इतिहास, ऑपरेटिंग सिस्टम और आईपी स्थानों की समीक्षा करें।",
+    "refresh_btn": "पुनः ताज़ा करें",
+    "search_placeholder": "आईपी, ओएस या ब्राउज़र द्वारा खोजें...",
+    "devices": {
+      "all": "सभी डिवाइस",
+      "desktop": "डेस्कटॉप",
+      "laptop": "लैपटॉप",
+      "mobile": "मोबाइल"
+    },
+    "statuses": {
+      "all": "सभी स्थितियां",
+      "success": "सफल",
+      "failed": "विफल"
+    },
+    "table": {
+      "device_os": "डिवाइस / ओएस",
+      "browser": "ब्राउज़र",
+      "ip": "आईपी पता",
+      "datetime": "दिनांक और समय",
+      "status": "स्थिति",
+      "loading": "सुरक्षा रिकॉर्ड पुनर्प्राप्त किए जा रहे हैं...",
+      "failed": "सुरक्षा रिकॉर्ड लोड करने में विफल।",
+      "empty_title": "कोई लॉगिन रिकॉर्ड नहीं मिला",
+      "empty_desc": "हमें आपकी फ़िल्टर सेटिंग से मेल खाने वाला कोई लॉगिन प्रयास नहीं मिला।"
+    }
+  },
+  "forgot": {
+    "tab_title": "खाता पासवर्ड रीसेट करें",
+    "title": "लॉग इन करने में समस्या?",
+    "subtitle": "अपना पंजीकृत ईमेल पता या फ़ोन नंबर दर्ज करें। हम आपके खाते के लिए एक सुरक्षित नया अस्थायी पासवर्ड जनरेट करेंगे।",
+    "email_label": "ईमेल पता",
+    "email_placeholder": "name@example.com",
+    "phone_label": "या फ़ोन नंबर",
+    "phone_placeholder": "+1 (555) 000-0000",
+    "submit_btn": "नया पासवर्ड जनरेट करें",
+    "back_link": "पहुंच पर वापस जाएं",
+    "gen_password_title": "जनरेट किया गया पासवर्ड",
+    "copy_btn": "पासवर्ड कॉपी करें",
+    "copied_btn": "कॉपी किया गया!"
+  },
+  "footer": "© 2026 इलीवेंस इंटर्नशिप प्लेटफॉर्म। सभी सुरक्षा घटनाएं एन्क्रिप्टेड और लॉग की जाती हैं।"
+}

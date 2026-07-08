@@ -549,6 +549,45 @@ async function forgotPassword(req, res) {
   }
 }
 
+/**
+ * Update user language preference
+ * @route PUT /api/auth/language
+ */
+async function updateLanguage(req, res) {
+  try {
+    const { language } = req.body;
+    if (!language || !['en', 'es', 'hi', 'pt', 'zh', 'fr'].includes(language)) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid or missing language code'
+      });
+    }
+
+    req.user.language = language;
+    await req.user.save();
+
+    return res.status(200).json({
+      success: true,
+      message: 'Language preference updated successfully',
+      user: {
+        id: req.user.id,
+        name: req.user.name,
+        email: req.user.email,
+        phone: req.user.phone,
+        language: req.user.language,
+        isPremium: req.user.isPremium,
+        currentPlan: req.user.currentPlan
+      }
+    });
+  } catch (error) {
+    console.error('Update language error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Server error during language update'
+    });
+  }
+}
+
 module.exports = {
   register,
   login,
@@ -557,4 +596,5 @@ module.exports = {
   verifyLoginOTP,
   resendLoginOTP,
   forgotPassword,
+  updateLanguage,
 };

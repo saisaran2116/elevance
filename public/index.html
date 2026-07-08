@@ -26,7 +26,7 @@
     <div class="header-container">
       <div class="logo">
         <i class="fa-solid fa-graduation-cap logo-icon"></i>
-        <span class="logo-text">ELEVANCE</span>
+        <span class="logo-text" data-i18n="logo">ELEVANCE</span>
       </div>
       <div class="language-selector-container">
         <i class="fa-solid fa-globe language-icon"></i>
@@ -40,13 +40,13 @@
         </select>
       </div>
       <nav class="app-nav">
-        <button id="nav-btn-auth" class="nav-link active" onclick="switchTab('auth')">
+        <button id="nav-btn-auth" class="nav-link active" onclick="switchTab('auth')" data-i18n="nav.access">
           <i class="fa-solid fa-right-to-bracket"></i> Access
         </button>
-        <button id="nav-btn-profile" class="nav-link hidden" onclick="switchTab('profile')">
+        <button id="nav-btn-profile" class="nav-link hidden" onclick="switchTab('profile')" data-i18n="nav.profile">
           <i class="fa-solid fa-user-shield"></i> Profile & Security
         </button>
-        <button id="nav-btn-logout" class="nav-link hidden logout-btn" onclick="handleLogout()">
+        <button id="nav-btn-logout" class="nav-link hidden logout-btn" onclick="handleLogout()" data-i18n="nav.logout">
           <i class="fa-solid fa-power-off"></i> Logout
         </button>
       </nav>

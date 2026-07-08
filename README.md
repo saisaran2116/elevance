@@ -30,3 +30,12 @@ We have completed the Forgot Password feature by building the dedicated UI flow:
 2. **Strict Custom Password Generator**: Modified `generateCustomPassword` to generate passwords consisting **strictly of uppercase and lowercase letters** (no numbers or special characters are included).
 3. **Database Integration**: Plaintext passwords are automatically hashed with bcrypt, stored in the SQLite database, and returned in the HTTP response JSON to display on the client UI.
 4. **Verification**: Checked via automated tests and manual UI testing.
+
+## Day 7: Internationalization (i18n) Setup
+We have integrated multi-language support (English, Spanish, Hindi, Portuguese, Chinese, French) across the entire platform:
+1. **i18n Library**: Integrated `i18next` via CDN to handle client-side translations.
+2. **Translation Resources**: Created structured JSON resources in `public/locales/` for English (`en.json`), Spanish (`es.json`), Hindi (`hi.json`), Portuguese (`pt.json`), Chinese (`zh.json`), and French (`fr.json`).
+3. **Language Selector**: Added interactive dropdown selectors to both `public/index.html` and `public/forgot-password.html` styled to match the dark glassmorphism theme.
+4. **Backend Sync & Persistence**: Added a backend `PUT /api/auth/language` route and handler in `authController.js` to persist preferred language to the SQLite database. Switched languages dynamically reflect immediately on the frontend and are restored upon page reload or login.
+5. **Verification**: Tested manually via the dropdown selector and verified that DB updates occur correctly.
+

@@ -65,6 +65,11 @@ async function checkAuthSession() {
         };
       }
       
+      // Update global language to match user preference
+      if (currentUser && currentUser.language && typeof changeLanguage === 'function') {
+        changeLanguage(currentUser.language);
+      }
+      
       showProfilePage();
     } else {
       showAuthPage();
@@ -114,15 +119,15 @@ function showProfilePage() {
   // Fill in profile information
   document.getElementById('user-display-name').textContent = currentUser.name;
   document.getElementById('user-display-email').textContent = currentUser.email;
-  document.getElementById('user-display-phone').textContent = currentUser.phone || 'Not provided';
+  document.getElementById('user-display-phone').textContent = currentUser.phone || i18next.t('profile.not_provided');
   document.getElementById('user-display-lang').textContent = getLanguageName(currentUser.language);
   
   const premiumEl = document.getElementById('user-display-premium');
   if (currentUser.isPremium) {
-    premiumEl.textContent = 'Premium Member';
+    premiumEl.textContent = i18next.t('profile.premium_member');
     premiumEl.className = 'meta-value badge-premium';
   } else {
-    premiumEl.textContent = 'Free Member';
+    premiumEl.textContent = i18next.t('profile.free_member');
     premiumEl.className = 'meta-value';
   }
   
@@ -288,6 +293,9 @@ async function submitLogin(e) {
         formLogin.reset();
       } else {
         currentUser = data.user;
+        if (currentUser && currentUser.language && typeof changeLanguage === 'function') {
+          changeLanguage(currentUser.language);
+        }
         showProfilePage();
         formLogin.reset();
       }
@@ -338,6 +346,9 @@ async function submitOTP(e) {
     if (response.ok && data.success) {
       clearInterval(otpTimerInterval);
       currentUser = data.user;
+      if (currentUser && currentUser.language && typeof changeLanguage === 'function') {
+        changeLanguage(currentUser.language);
+      }
       showProfilePage();
       formOtp.reset();
       setAuthMode('login');

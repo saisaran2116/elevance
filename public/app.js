@@ -142,6 +142,9 @@ function showProfilePage() {
   localStorage.setItem('user_premium', currentUser.isPremium);
   localStorage.setItem('user_plan', currentUser.currentPlan || 'Free');
 
+  // Sync to window.currentUser for i18n manager
+  window.currentUser = currentUser;
+
   // Toggle Visibility
   sectionAuth.classList.add('hidden');
   sectionAuth.classList.remove('active');
@@ -605,3 +608,22 @@ function capitalizeFirstLetter(str) {
   if (!str) return '';
   return str.charAt(0).toUpperCase() + str.slice(1);
 }
+
+// Sync preferred language to backend database
+async function updateBackendLanguage(lang) {
+  try {
+    const response = await fetch('/api/auth/language', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ language: lang })
+    });
+    if (!response.ok) {
+      console.error('Failed to sync language preference to backend');
+    }
+  } catch (error) {
+    console.error('Error syncing language to backend:', error);
+  }
+}
+window.updateBackendLanguage = updateBackendLanguage;

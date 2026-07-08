@@ -1,0 +1,99 @@
+{
+  "logo": "ELEVANCE",
+  "nav": {
+    "access": "Accès",
+    "profile": "Profil & Sécurité",
+    "logout": "Déconnexion"
+  },
+  "auth": {
+    "tabs": {
+      "login": "Connexion",
+      "register": "S'inscrire"
+    },
+    "login": {
+      "title": "Bon retour",
+      "subtitle": "Entrez vos identifiants pour accéder à votre tableau de bord.",
+      "email_label": "Adresse e-mail",
+      "email_placeholder": "nom@exemple.com",
+      "password_label": "Mot de passe",
+      "password_placeholder": "••••••••",
+      "forgot_password": "Mot de passe oublié ?",
+      "submit_btn": "Se connecter"
+    },
+    "otp": {
+      "title": "Vérification requise",
+      "subtitle": "Connexion via Google Chrome détectée. Entrez le code OTP envoyé à {{email}}.",
+      "otp_label": "Code à usage unique (OTP)",
+      "otp_placeholder": "123456",
+      "submit_btn": "Vérifier et se connecter",
+      "resend_prefix": "Renvoyer l'OTP dans ",
+      "resend_suffix": "s",
+      "resend_btn": "Renvoyer l'OTP"
+    },
+    "register": {
+      "title": "Créer un compte",
+      "subtitle": "Rejoignez le réseau de stages premium aujourd'hui.",
+      "name_label": "Nom complet",
+      "name_placeholder": "Alex Mercer",
+      "email_label": "Adresse e-mail",
+      "email_placeholder": "alex@exemple.com",
+      "phone_label": "Numéro de téléphone",
+      "phone_placeholder": "+1 (555) 000-0000",
+      "lang_label": "Langue préférée",
+      "password_label": "Mot de passe",
+      "password_placeholder": "••••••••",
+      "submit_btn": "Créer un compte"
+    }
+  },
+  "profile": {
+    "loading": "Chargement de l'utilisateur...",
+    "lang_label": "Langue",
+    "phone_label": "Téléphone",
+    "membership_label": "Abonnement",
+    "plan_label": "Plan actuel",
+    "free_member": "Membre gratuit",
+    "premium_member": "Membre Premium",
+    "not_provided": "Non fourni",
+    "history_title": "Historique des connexions & Sécurité",
+    "history_subtitle": "Consultez l'historique des sessions du navigateur, les systèmes d'exploitation et les adresses IP pour les contrôles de sécurité.",
+    "refresh_btn": "Actualiser",
+    "search_placeholder": "Rechercher par IP, OS ou navigateur...",
+    "devices": {
+      "all": "Tous les appareils",
+      "desktop": "Ordinateur de bureau",
+      "laptop": "Ordinateur portable",
+      "mobile": "Mobile"
+    },
+    "statuses": {
+      "all": "Tous les statuts",
+      "success": "Succès",
+      "failed": "Échoué"
+    },
+    "table": {
+      "device_os": "Appareil / OS",
+      "browser": "Navigateur",
+      "ip": "Adresse IP",
+      "datetime": "Date & Heure",
+      "status": "Statut",
+      "loading": "Récupération des dossiers de sécurité...",
+      "failed": "Échec du chargement des dossiers de sécurité.",
+      "empty_title": "Aucun enregistrement trouvé",
+      "empty_desc": "We couldn't find any login attempts matching your filter settings."
+    }
+  },
+  "forgot": {
+    "tab_title": "Réinitialiser le mot de passe",
+    "title": "Difficultés à vous connecter ?",
+    "subtitle": "Entrez votre adresse e-mail ou votre numéro de téléphone enregistré. Nous générerons un nouveau mot de passe temporaire sécurisé pour votre compte.",
+    "email_label": "Adresse e-mail",
+    "email_placeholder": "nom@exemple.com",
+    "phone_label": "Ou numéro de téléphone",
+    "phone_placeholder": "+1 (555) 000-0000",
+    "submit_btn": "Générer un nouveau mot de passe",
+    "back_link": "Retour à l'accès",
+    "gen_password_title": "Mot de passe généré",
+    "copy_btn": "Copier le mot de passe",
+    "copied_btn": "Copié !"
+  },
+  "footer": "© 2026 Elevance Internship Platform. Tous les événements de sécurité sont cryptés et enregistrés."
+}

@@ -199,6 +199,45 @@ body {
   border-color: rgba(239, 68, 68, 0.4);
 }
 
+/* Language Selector styles */
+.language-selector-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--panel-border);
+  padding: 0.4rem 0.8rem;
+  border-radius: 8px;
+  margin-left: auto;
+  margin-right: 1.5rem;
+  transition: var(--transition-smooth);
+}
+
+.language-selector-container:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(99, 102, 241, 0.3);
+}
+
+.language-icon {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.language-select-dropdown {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  outline: none;
+}
+
+.language-select-dropdown option {
+  background: var(--bg-color);
+  color: var(--text-primary);
+}
+
 /* Glassmorphism Panel Container */
 .glass-panel {
   backdrop-filter: blur(16px);

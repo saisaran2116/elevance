@@ -1,0 +1,99 @@
+{
+  "logo": "ELEVANCE",
+  "nav": {
+    "access": "登录/注册",
+    "profile": "个人资料与安全",
+    "logout": "退出登录"
+  },
+  "auth": {
+    "tabs": {
+      "login": "登录",
+      "register": "注册"
+    },
+    "login": {
+      "title": "欢迎回来",
+      "subtitle": "请输入您的凭据以访问控制台。",
+      "email_label": "电子邮件地址",
+      "email_placeholder": "name@example.com",
+      "password_label": "密码",
+      "password_placeholder": "••••••••",
+      "forgot_password": "忘记密码？",
+      "submit_btn": "登录"
+    },
+    "otp": {
+      "title": "需要安全验证",
+      "subtitle": "检测到 Google Chrome 浏览器登录。请输入发送至 {{email}} 的一次性验证码 (OTP)。",
+      "otp_label": "一次性验证码 (OTP)",
+      "otp_placeholder": "123456",
+      "submit_btn": "验证并登录",
+      "resend_prefix": "重新发送验证码 ",
+      "resend_suffix": " 秒",
+      "resend_btn": "重新发送验证码"
+    },
+    "register": {
+      "title": "创建账户",
+      "subtitle": "立即加入尊享实习平台网络。",
+      "name_label": "姓名",
+      "name_placeholder": "Alex Mercer",
+      "email_label": "电子邮件地址",
+      "email_placeholder": "alex@example.com",
+      "phone_label": "电话号码",
+      "phone_placeholder": "+1 (555) 000-0000",
+      "lang_label": "首选语言",
+      "password_label": "密码",
+      "password_placeholder": "••••••••",
+      "submit_btn": "创建账户"
+    }
+  },
+  "profile": {
+    "loading": "正在加载用户...",
+    "lang_label": "语言",
+    "phone_label": "电话号码",
+    "membership_label": "会员资格",
+    "plan_label": "当前方案",
+    "free_member": "免费会员",
+    "premium_member": "尊享会员",
+    "not_provided": "未提供",
+    "history_title": "登录历史与安全审计",
+    "history_subtitle": "审查浏览器会话历史、操作系统和 IP 地理位置，进行安全检查。",
+    "refresh_btn": "刷新",
+    "search_placeholder": "按 IP、操作系统或浏览器搜索...",
+    "devices": {
+      "all": "所有设备",
+      "desktop": "台式机",
+      "laptop": "笔记本电脑",
+      "mobile": "移动设备"
+    },
+    "statuses": {
+      "all": "所有状态",
+      "success": "成功",
+      "failed": "失败"
+    },
+    "table": {
+      "device_os": "设备 / 操作系统",
+      "browser": "浏览器",
+      "ip": "IP 地址",
+      "datetime": "日期与时间",
+      "status": "状态",
+      "loading": "正在检索安全记录...",
+      "failed": "加载安全记录失败。",
+      "empty_title": "未找到登录记录",
+      "empty_desc": "我们找不到任何与您的过滤器设置相匹配的登录尝试。"
+    }
+  },
+  "forgot": {
+    "tab_title": "重置账户密码",
+    "title": "登录遇到问题？",
+    "subtitle": "请输入您的注册邮箱或电话号码。我们将为您的账户生成一个安全的新临时密码。",
+    "email_label": "电子邮件地址",
+    "email_placeholder": "name@example.com",
+    "phone_label": "或电话号码",
+    "phone_placeholder": "+1 (555) 000-0000",
+    "submit_btn": "生成新密码",
+    "back_link": "返回登录",
+    "gen_password_title": "生成的密码",
+    "copy_btn": "复制密码",
+    "copied_btn": "已复制！"
+  },
+  "footer": "© 2026 Elevance 实习平台。所有安全事件均已加密并记录。"
+}

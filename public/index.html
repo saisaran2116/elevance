@@ -197,25 +197,25 @@
             <div class="avatar-ring">
               <i class="fa-solid fa-user-graduate default-avatar"></i>
             </div>
-            <h3 id="user-display-name" class="user-name-title">Loading User...</h3>
+            <h3 id="user-display-name" class="user-name-title" data-i18n="profile.loading">Loading User...</h3>
             <p id="user-display-email" class="user-email-subtitle">user@example.com</p>
           </div>
           
           <div class="user-meta-details">
             <div class="meta-item">
-              <span class="meta-label"><i class="fa-solid fa-language"></i> Language</span>
+              <span class="meta-label" data-i18n="profile.lang_label"><i class="fa-solid fa-language"></i> Language</span>
               <span id="user-display-lang" class="meta-value">English</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label"><i class="fa-solid fa-phone"></i> Phone</span>
+              <span class="meta-label" data-i18n="profile.phone_label"><i class="fa-solid fa-phone"></i> Phone</span>
               <span id="user-display-phone" class="meta-value">Not provided</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label"><i class="fa-solid fa-crown"></i> Membership</span>
+              <span class="meta-label" data-i18n="profile.membership_label"><i class="fa-solid fa-crown"></i> Membership</span>
               <span id="user-display-premium" class="meta-value badge-premium">Free Member</span>
             </div>
             <div class="meta-item">
-              <span class="meta-label"><i class="fa-solid fa-award"></i> Current Plan</span>
+              <span class="meta-label" data-i18n="profile.plan_label"><i class="fa-solid fa-award"></i> Current Plan</span>
               <span id="user-display-plan" class="meta-value badge-plan">Free</span>
             </div>
           </div>
@@ -225,10 +225,10 @@
         <div class="login-history-card glass-panel">
           <div class="card-header">
             <div class="header-titles">
-              <h2 class="section-heading"><i class="fa-solid fa-shield-halved"></i> Login History & Security</h2>
-              <p class="section-subheading">Review browser session history, operating systems, and IP locations for security checks.</p>
+              <h2 class="section-heading" data-i18n="profile.history_title"><i class="fa-solid fa-shield-halved"></i> Login History & Security</h2>
+              <p class="section-subheading" data-i18n="profile.history_subtitle">Review browser session history, operating systems, and IP locations for security checks.</p>
             </div>
-            <button id="btn-refresh-history" class="btn-secondary" onclick="loadLoginHistory()">
+            <button id="btn-refresh-history" class="btn-secondary" onclick="loadLoginHistory()" data-i18n="profile.refresh_btn">
               <i class="fa-solid fa-arrows-rotate"></i> Refresh
             </button>
           </div>
@@ -237,24 +237,24 @@
           <div class="history-controls">
             <div class="search-box">
               <i class="fa-solid fa-magnifying-glass search-icon"></i>
-              <input type="text" id="search-history-input" placeholder="Search by IP, OS, or Browser..." oninput="filterHistory()">
+              <input type="text" id="search-history-input" placeholder="Search by IP, OS, or Browser..." oninput="filterHistory()" data-i18n-placeholder="profile.search_placeholder">
             </div>
             
             <div class="filter-dropdowns">
               <div class="select-wrapper">
                 <select id="filter-device" onchange="filterHistory()">
-                  <option value="">All Devices</option>
-                  <option value="desktop">🖥️ Desktop</option>
-                  <option value="laptop">💻 Laptop</option>
-                  <option value="mobile">📱 Mobile</option>
+                  <option value="" data-i18n="profile.devices.all">All Devices</option>
+                  <option value="desktop" data-i18n="profile.devices.desktop">🖥️ Desktop</option>
+                  <option value="laptop" data-i18n="profile.devices.laptop">💻 Laptop</option>
+                  <option value="mobile" data-i18n="profile.devices.mobile">📱 Mobile</option>
                 </select>
               </div>
 
               <div class="select-wrapper">
                 <select id="filter-status" onchange="filterHistory()">
-                  <option value="">All Statuses</option>
-                  <option value="Success">Success</option>
-                  <option value="Failed">Failed</option>
+                  <option value="" data-i18n="profile.statuses.all">All Statuses</option>
+                  <option value="Success" data-i18n="profile.statuses.success">Success</option>
+                  <option value="Failed" data-i18n="profile.statuses.failed">Failed</option>
                 </select>
               </div>
             </div>
@@ -265,18 +265,18 @@
             <table class="history-table">
               <thead>
                 <tr>
-                  <th>Device / OS</th>
-                  <th>Browser</th>
-                  <th>IP Address</th>
-                  <th>Date & Time</th>
-                  <th>Status</th>
+                  <th data-i18n="profile.table.device_os">Device / OS</th>
+                  <th data-i18n="profile.table.browser">Browser</th>
+                  <th data-i18n="profile.table.ip">IP Address</th>
+                  <th data-i18n="profile.table.datetime">Date & Time</th>
+                  <th data-i18n="profile.table.status">Status</th>
                 </tr>
               </thead>
               <tbody id="login-history-tbody">
                 <tr>
                   <td colspan="5" class="table-loading-state">
                     <i class="fa-solid fa-circle-notch fa-spin table-spinner"></i>
-                    <span>Retrieving security records...</span>
+                    <span data-i18n="profile.table.loading">Retrieving security records...</span>
                   </td>
                 </tr>
               </tbody>
@@ -286,8 +286,8 @@
           <!-- Empty State -->
           <div id="history-empty-state" class="empty-state hidden">
             <i class="fa-solid fa-circle-info empty-icon"></i>
-            <h3>No login records found</h3>
-            <p>We couldn't find any login attempts matching your filter settings.</p>
+            <h3 data-i18n="profile.table.empty_title">No login records found</h3>
+            <p data-i18n="profile.table.empty_desc">We couldn't find any login attempts matching your filter settings.</p>
           </div>
         </div>
       </div>
@@ -296,7 +296,7 @@
 
   <footer class="app-footer">
     <div class="footer-container">
-      <p>&copy; 2026 Elevance Internship Platform. All security events are encrypted and logged.</p>
+      <p data-i18n="footer">&copy; 2026 Elevance Internship Platform. All security events are encrypted and logged.</p>
     </div>
   </footer>
 

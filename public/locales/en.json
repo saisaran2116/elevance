@@ -1,0 +1,99 @@
+{
+  "logo": "ELEVANCE",
+  "nav": {
+    "access": "Access",
+    "profile": "Profile & Security",
+    "logout": "Logout"
+  },
+  "auth": {
+    "tabs": {
+      "login": "Login",
+      "register": "Register"
+    },
+    "login": {
+      "title": "Welcome Back",
+      "subtitle": "Enter your credentials to access your dashboard.",
+      "email_label": "Email Address",
+      "email_placeholder": "name@example.com",
+      "password_label": "Password",
+      "password_placeholder": "••••••••",
+      "forgot_password": "Forgot password?",
+      "submit_btn": "Sign In"
+    },
+    "otp": {
+      "title": "Verification Required",
+      "subtitle": "Google Chrome login detected. Enter the OTP sent to {{email}}.",
+      "otp_label": "One-Time Password (OTP)",
+      "otp_placeholder": "123456",
+      "submit_btn": "Verify and Login",
+      "resend_prefix": "Resend OTP in ",
+      "resend_suffix": "s",
+      "resend_btn": "Resend OTP"
+    },
+    "register": {
+      "title": "Create Account",
+      "subtitle": "Join the premium internship network today.",
+      "name_label": "Full Name",
+      "name_placeholder": "Alex Mercer",
+      "email_label": "Email Address",
+      "email_placeholder": "alex@example.com",
+      "phone_label": "Phone Number",
+      "phone_placeholder": "+1 (555) 000-0000",
+      "lang_label": "Preferred Language",
+      "password_label": "Password",
+      "password_placeholder": "••••••••",
+      "submit_btn": "Create Account"
+    }
+  },
+  "profile": {
+    "loading": "Loading User...",
+    "lang_label": "Language",
+    "phone_label": "Phone",
+    "membership_label": "Membership",
+    "plan_label": "Current Plan",
+    "free_member": "Free Member",
+    "premium_member": "Premium Member",
+    "not_provided": "Not provided",
+    "history_title": "Login History & Security",
+    "history_subtitle": "Review browser session history, operating systems, and IP locations for security checks.",
+    "refresh_btn": "Refresh",
+    "search_placeholder": "Search by IP, OS, or Browser...",
+    "devices": {
+      "all": "All Devices",
+      "desktop": "Desktop",
+      "laptop": "Laptop",
+      "mobile": "Mobile"
+    },
+    "statuses": {
+      "all": "All Statuses",
+      "success": "Success",
+      "failed": "Failed"
+    },
+    "table": {
+      "device_os": "Device / OS",
+      "browser": "Browser",
+      "ip": "IP Address",
+      "datetime": "Date & Time",
+      "status": "Status",
+      "loading": "Retrieving security records...",
+      "failed": "Failed to load security records.",
+      "empty_title": "No login records found",
+      "empty_desc": "We couldn't find any login attempts matching your filter settings."
+    }
+  },
+  "forgot": {
+    "tab_title": "Reset Account Password",
+    "title": "Trouble Logging In?",
+    "subtitle": "Enter your registered email address or phone number. We will generate a secure new temporary password for your account.",
+    "email_label": "Email Address",
+    "email_placeholder": "name@example.com",
+    "phone_label": "Or Phone Number",
+    "phone_placeholder": "+1 (555) 000-0000",
+    "submit_btn": "Generate New Password",
+    "back_link": "Back to Access",
+    "gen_password_title": "Generated Password",
+    "copy_btn": "Copy Password",
+    "copied_btn": "Copied!"
+  },
+  "footer": "© 2026 Elevance Internship Platform. All security events are encrypted and logged."
+}

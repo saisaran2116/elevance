@@ -376,11 +376,18 @@ function startOtpCountdown() {
   
   otpTimerText.classList.remove('hidden');
   btnOtpResend.classList.add('hidden');
-  otpTimerSeconds.textContent = otpSecondsRemaining;
+  
+  const renderTimerText = () => {
+    const prefix = i18next && typeof i18next.t === 'function' ? i18next.t('auth.otp.resend_prefix') : 'Resend OTP in ';
+    const suffix = i18next && typeof i18next.t === 'function' ? i18next.t('auth.otp.resend_suffix') : 's';
+    otpTimerText.innerHTML = `${prefix}<strong id="otp-timer-seconds">${otpSecondsRemaining}</strong>${suffix}`;
+  };
+  
+  renderTimerText();
 
   otpTimerInterval = setInterval(() => {
     otpSecondsRemaining--;
-    otpTimerSeconds.textContent = otpSecondsRemaining;
+    renderTimerText();
     
     if (otpSecondsRemaining <= 0) {
       clearInterval(otpTimerInterval);
@@ -525,10 +532,13 @@ function renderHistoryTable(records) {
     if (log.device === 'laptop') deviceIcon = 'fa-laptop';
     else if (log.device === 'mobile') deviceIcon = 'fa-mobile-screen-button';
     
+    const deviceKey = `profile.devices.${log.device}`;
+    const deviceText = i18next && typeof i18next.t === 'function' ? i18next.t(deviceKey) : capitalizeFirstLetter(log.device);
+
     const deviceBadge = `
       <span class="device-badge">
         <i class="fa-solid ${deviceIcon}"></i>
-        <span>${capitalizeFirstLetter(log.device)} (${log.os})</span>
+        <span>${deviceText} (${log.os})</span>
       </span>
     `;
 
@@ -546,10 +556,14 @@ function renderHistoryTable(records) {
     const isSuccess = log.status === 'Success';
     const statusClass = isSuccess ? 'success' : 'failed';
     const statusIcon = isSuccess ? 'fa-circle-check' : 'fa-circle-xmark';
+    
+    const statusKey = isSuccess ? 'profile.statuses.success' : 'profile.statuses.failed';
+    const statusText = i18next && typeof i18next.t === 'function' ? i18next.t(statusKey) : log.status;
+
     const statusBadge = `
       <span class="status-badge ${statusClass}">
         <i class="fa-solid ${statusIcon}"></i>
-        <span>${log.status}</span>
+        <span>${statusText}</span>
       </span>
     `;
 
@@ -627,3 +641,13 @@ async function updateBackendLanguage(lang) {
   }
 }
 window.updateBackendLanguage = updateBackendLanguage;
+
+// Listen to languageChanged to refresh the UI and history table
+window.addEventListener('languageChanged', () => {
+  if (currentUser) {
+    showProfilePage();
+    if (fullHistory.length > 0) {
+      renderHistoryTable(fullHistory);
+    }
+  }
+});

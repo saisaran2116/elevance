@@ -39,3 +39,12 @@ We have integrated multi-language support (English, Spanish, Hindi, Portuguese, 
 4. **Backend Sync & Persistence**: Added a backend `PUT /api/auth/language` route and handler in `authController.js` to persist preferred language to the SQLite database. Switched languages dynamically reflect immediately on the frontend and are restored upon page reload or login.
 5. **Verification**: Tested manually via the dropdown selector and verified that DB updates occur correctly.
 
+## Day 8: French Language OTP Security
+We have implemented specific email OTP security verification for switching the language to French:
+1. **Interception**: If a logged-in user attempts to switch their preferred language to French, the switch is intercepted, and the frontend dropdown resets to the current language.
+2. **OTP Generation**: The backend triggers OTP generation and emails a 6-digit code to the user's email address.
+3. **UI Modal**: A dedicated glassmorphism OTP verification modal is displayed on the screen with a 60-second countdown timer for resending OTP codes.
+4. **Validation**: Upon submitting the correct OTP, the backend validates the code, persists the preferred language to the SQLite database, and the client applies the French localization.
+5. **Verification**: Run `node src/utils/testFrenchLanguageOtp.js` to verify the automated test suite.
+
+

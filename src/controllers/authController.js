@@ -555,12 +555,31 @@ async function forgotPassword(req, res) {
  */
 async function updateLanguage(req, res) {
   try {
-    const { language } = req.body;
+    const { language, otp } = req.body;
     if (!language || !['en', 'es', 'hi', 'pt', 'zh', 'fr'].includes(language)) {
       return res.status(400).json({
         success: false,
         message: 'Invalid or missing language code'
       });
+    }
+
+    if (language === 'fr' && req.user.language !== 'fr') {
+      if (!otp) {
+        const { generateOTP, sendEmail } = require('../utils/messagingService');
+        const otpCode = await generateOTP(req.user.email, 'email');
+        await sendEmail(
+          req.user.email,
+          'Your Elevance French Language Switch OTP',
+          `Your security verification OTP code is: ${otpCode}\n\nThis OTP is valid for 5 minutes.`
+        );
+
+        return res.status(200).json({
+          success: true,
+          requireOtp: true,
+          email: req.user.email,
+          message: 'French language change requires OTP verification.'
+        });
+      }
     }
 
     req.user.language = language;

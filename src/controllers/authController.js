@@ -579,6 +579,15 @@ async function updateLanguage(req, res) {
           email: req.user.email,
           message: 'French language change requires OTP verification.'
         });
+      } else {
+        const { verifyOTP } = require('../utils/messagingService');
+        const isValid = await verifyOTP(req.user.email, 'email', otp);
+        if (!isValid) {
+          return res.status(400).json({
+            success: false,
+            message: 'Invalid or expired verification code'
+          });
+        }
       }
     }
 

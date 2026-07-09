@@ -30,6 +30,11 @@
       "resend_suffix": "s",
       "resend_btn": "Resend OTP"
     },
+    "french_otp": {
+      "title": "French Language Verification",
+      "subtitle": "French language change requires validation. Enter the OTP sent to your email:",
+      "submit_btn": "Verify and Switch"
+    },
     "register": {
       "title": "Create Account",
       "subtitle": "Join the premium internship network today.",

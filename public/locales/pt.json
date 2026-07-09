@@ -30,6 +30,11 @@
       "resend_suffix": "s",
       "resend_btn": "Reenviar OTP"
     },
+    "french_otp": {
+      "title": "Verificação do idioma francês",
+      "subtitle": "A mudança para o francês requer validação. Insira o OTP enviado para o seu e-mail:",
+      "submit_btn": "Verificar e mudar"
+    },
     "register": {
       "title": "Criar conta",
       "subtitle": "Junte-se à rede de estágios premium hoje.",

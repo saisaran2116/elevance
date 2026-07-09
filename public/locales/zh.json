@@ -30,6 +30,11 @@
       "resend_suffix": " 秒",
       "resend_btn": "重新发送验证码"
     },
+    "french_otp": {
+      "title": "法语语言验证",
+      "subtitle": "切换到法语需要验证。请输入发送到您邮箱的 OTP 验证码：",
+      "submit_btn": "验证并切换"
+    },
     "register": {
       "title": "创建账户",
       "subtitle": "立即加入尊享实习平台网络。",

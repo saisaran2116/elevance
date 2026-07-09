@@ -30,6 +30,11 @@
       "resend_suffix": "s",
       "resend_btn": "Renvoyer l'OTP"
     },
+    "french_otp": {
+      "title": "Vérification de la langue française",
+      "subtitle": "Le passage en français nécessite une validation. Saisissez l'OTP envoyé à votre e-mail :",
+      "submit_btn": "Vérifier et changer"
+    },
     "register": {
       "title": "Créer un compte",
       "subtitle": "Rejoignez le réseau de stages premium aujourd'hui.",

@@ -4,6 +4,9 @@ let fullHistory = [];
 let otpEmail = null;
 let otpTimerInterval = null;
 let otpSecondsRemaining = 60;
+let frenchOtpTimerInterval = null;
+let frenchOtpSecondsRemaining = 60;
+
 
 // DOM Elements
 const sectionAuth = document.getElementById('section-auth');
@@ -633,14 +636,61 @@ async function updateBackendLanguage(lang) {
       },
       body: JSON.stringify({ language: lang })
     });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.requireOtp) {
+      document.getElementById('french-otp-error-alert').classList.add('hidden');
+      document.getElementById('french-otp-success-alert').classList.add('hidden');
+      document.getElementById('french-otp-code').value = '';
+      
+      document.getElementById('french-otp-modal').classList.remove('hidden');
+      startFrenchOtpCountdown();
+    }
+    
     if (!response.ok) {
       console.error('Failed to sync language preference to backend');
     }
+    return data;
   } catch (error) {
     console.error('Error syncing language to backend:', error);
   }
 }
 window.updateBackendLanguage = updateBackendLanguage;
+
+function startFrenchOtpCountdown() {
+  const secondsEl = document.getElementById('french-otp-timer-seconds');
+  const resendBtn = document.getElementById('btn-french-otp-resend');
+  const timerText = secondsEl.parentElement;
+  
+  clearInterval(frenchOtpTimerInterval);
+  frenchOtpSecondsRemaining = 60;
+  resendBtn.classList.add('hidden');
+  timerText.classList.remove('hidden');
+  secondsEl.textContent = frenchOtpSecondsRemaining;
+  
+  frenchOtpTimerInterval = setInterval(() => {
+    frenchOtpSecondsRemaining--;
+    secondsEl.textContent = frenchOtpSecondsRemaining;
+    
+    if (frenchOtpSecondsRemaining <= 0) {
+      clearInterval(frenchOtpTimerInterval);
+      timerText.classList.add('hidden');
+      resendBtn.classList.remove('hidden');
+    }
+  }, 1000);
+}
+
+function closeFrenchOtpModal() {
+  document.getElementById('french-otp-modal').classList.add('hidden');
+  clearInterval(frenchOtpTimerInterval);
+}
+window.closeFrenchOtpModal = closeFrenchOtpModal;
+
+function triggerFrenchOtpFlow() {
+  updateBackendLanguage('fr');
+}
+window.triggerFrenchOtpFlow = triggerFrenchOtpFlow;
 
 // Listen to languageChanged to refresh the UI and history table
 window.addEventListener('languageChanged', () => {

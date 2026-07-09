@@ -93,6 +93,19 @@ function setupLanguageSelectors() {
 async function changeLanguage(lang) {
   if (!languagesSupported.includes(lang)) return;
   
+  // Intercept French language switch for logged-in users who aren't already set to French
+  if (lang === 'fr' && window.currentUser && window.currentUser.language !== 'fr') {
+    // Revert the selector dropdowns to the current language
+    document.querySelectorAll('.language-select-dropdown').forEach(select => {
+      select.value = i18next.language;
+    });
+    // Trigger the French OTP flow
+    if (typeof window.triggerFrenchOtpFlow === 'function') {
+      window.triggerFrenchOtpFlow();
+    }
+    return;
+  }
+  
   await i18next.changeLanguage(lang);
   localStorage.setItem('user_language', lang);
   

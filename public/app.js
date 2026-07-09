@@ -701,3 +701,89 @@ window.addEventListener('languageChanged', () => {
     }
   }
 });
+
+async function submitFrenchOTP(e) {
+  e.preventDefault();
+  const errorAlert = document.getElementById('french-otp-error-alert');
+  const successAlert = document.getElementById('french-otp-success-alert');
+  errorAlert.classList.add('hidden');
+  successAlert.classList.add('hidden');
+  
+  const otpCode = document.getElementById('french-otp-code').value;
+  const btn = document.getElementById('btn-french-otp-submit');
+  const originalText = btn.innerHTML;
+  btn.disabled = true;
+  btn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Verifying...`;
+  
+  try {
+    const response = await fetch('/api/auth/language', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ language: 'fr', otp: otpCode })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.success) {
+      successAlert.textContent = 'French language verified successfully!';
+      successAlert.classList.remove('hidden');
+      
+      currentUser = data.user;
+      localStorage.setItem('user_language', 'fr');
+      
+      setTimeout(async () => {
+        closeFrenchOtpModal();
+        if (typeof changeLanguage === 'function') {
+          await changeLanguage('fr');
+        }
+      }, 1000);
+    } else {
+      errorAlert.textContent = data.message || 'Verification failed. Please try again.';
+      errorAlert.classList.remove('hidden');
+      btn.disabled = false;
+      btn.innerHTML = originalText;
+    }
+  } catch (err) {
+    console.error('French OTP verification error:', err);
+    errorAlert.textContent = 'Server connection failed. Please try again.';
+    errorAlert.classList.remove('hidden');
+    btn.disabled = false;
+    btn.innerHTML = originalText;
+  }
+}
+window.submitFrenchOTP = submitFrenchOTP;
+
+async function resendFrenchOTP() {
+  const errorAlert = document.getElementById('french-otp-error-alert');
+  const successAlert = document.getElementById('french-otp-success-alert');
+  errorAlert.classList.add('hidden');
+  successAlert.classList.add('hidden');
+  
+  try {
+    const response = await fetch('/api/auth/language', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ language: 'fr' })
+    });
+    
+    const data = await response.json();
+    
+    if (response.ok && data.success) {
+      successAlert.textContent = 'A new security code has been sent to your email.';
+      successAlert.classList.remove('hidden');
+      startFrenchOtpCountdown();
+    } else {
+      errorAlert.textContent = data.message || 'Failed to resend OTP. Please try again.';
+      errorAlert.classList.remove('hidden');
+    }
+  } catch (err) {
+    console.error('French OTP resend error:', err);
+    errorAlert.textContent = 'Server connection failed. Please try again.';
+    errorAlert.classList.remove('hidden');
+  }
+}
+window.resendFrenchOTP = resendFrenchOTP;

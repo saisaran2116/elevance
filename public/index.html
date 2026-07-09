@@ -294,6 +294,43 @@
     </section>
   </main>
 
+  <!-- French Language Switch OTP Modal -->
+  <div id="french-otp-modal" class="modal-overlay hidden">
+    <div class="modal-card glass-panel">
+      <div class="modal-header">
+        <h2 class="form-title" data-i18n="auth.french_otp.title">French Language Verification</h2>
+        <button class="modal-close-btn" onclick="closeFrenchOtpModal()" aria-label="Close modal"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-french-otp" onsubmit="submitFrenchOTP(event)">
+        <p class="form-subtitle" data-i18n="auth.french_otp.subtitle">French language change requires validation. Enter the OTP sent to your email:</p>
+        
+        <div id="french-otp-error-alert" class="alert-box error hidden"></div>
+        <div id="french-otp-success-alert" class="alert-box success hidden"></div>
+        
+        <div class="input-group">
+          <label for="french-otp-code" data-i18n="auth.otp.otp_label">One-Time Password (OTP)</label>
+          <div class="input-wrapper">
+            <i class="fa-solid fa-shield-halved input-icon"></i>
+            <input type="text" id="french-otp-code" placeholder="123456" pattern="\d{6}" maxlength="6" autocomplete="one-time-code" required data-i18n-placeholder="auth.otp.otp_placeholder">
+          </div>
+        </div>
+
+        <div class="modal-actions">
+          <button type="button" class="btn-secondary" onclick="closeFrenchOtpModal()">Cancel</button>
+          <button type="submit" id="btn-french-otp-submit" class="btn-primary">
+            <span data-i18n="auth.french_otp.submit_btn">Verify and Switch</span>
+            <i class="fa-solid fa-circle-check"></i>
+          </button>
+        </div>
+        
+        <div class="otp-timer-container">
+          <span>Resend OTP in <strong id="french-otp-timer-seconds">60</strong>s</span>
+          <button type="button" id="btn-french-otp-resend" class="btn-link hidden" onclick="resendFrenchOTP()">Resend OTP</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <footer class="app-footer">
     <div class="footer-container">
       <p data-i18n="footer">&copy; 2026 Elevance Internship Platform. All security events are encrypted and logged.</p>

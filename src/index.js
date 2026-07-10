@@ -17,6 +17,7 @@ app.use(cookieParser());
 app.use(express.static('public'));
 
 const authRoutes = require('./routes/authRoutes');
+const subscriptionRoutes = require('./routes/subscriptionRoutes');
 
 // Base Route
 app.get('/api/health', (req, res) => {
@@ -25,6 +26,7 @@ app.get('/api/health', (req, res) => {
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/subscription', subscriptionRoutes);
 
 // Sync Database and Start Server
 async function startServer() {

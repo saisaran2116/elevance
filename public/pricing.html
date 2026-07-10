@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Elevance | Subscription Plans</title>
+  <meta name="description" content="Upgrade to premium plans for Elevance Internship Platform.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="bg-glow-container">
+    <div class="glow-orb orb-1"></div>
+    <div class="glow-orb orb-2"></div>
+    <div class="glow-orb orb-3"></div>
+  </div>
+
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo" onclick="window.location.href='index.html'" style="cursor: pointer;">
+        <i class="fa-solid fa-graduation-cap logo-icon"></i>
+        <span class="logo-text">ELEVANCE</span>
+      </div>
+      <nav class="app-nav">
+        <a href="index.html" class="nav-link">
+          <i class="fa-solid fa-home"></i> Home
+        </a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <section class="section-container active">
+      <div class="pricing-header">
+        <h1 class="section-heading"><i class="fa-solid fa-rocket"></i> Choose Your Path</h1>
+        <p class="section-subheading">Unlock premium internships and accelerate your career.</p>
+      </div>
+      <div class="pricing-grid">
+        <!-- Free Plan -->
+        <div class="pricing-card glass-panel">
+          <h3 class="plan-name">Free Plan</h3>
+          <div class="plan-price">₹0<span class="period">/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> 1 Internship App/month</li>
+            <li><i class="fa-solid fa-check"></i> Basic Profile</li>
+          </ul>
+          <button class="btn-secondary plan-btn" disabled>Current Plan</button>
+        </div>
+
+        <!-- Bronze Plan -->
+        <div class="pricing-card glass-panel">
+          <h3 class="plan-name">Bronze Plan</h3>
+          <div class="plan-price">₹100<span class="period">/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> 3 Internship Apps/month</li>
+            <li><i class="fa-solid fa-check"></i> Priority Support</li>
+          </ul>
+          <button class="btn-primary plan-btn" onclick="initCheckout('Bronze')">Upgrade to Bronze</button>
+        </div>
+
+        <!-- Silver Plan -->
+        <div class="pricing-card glass-panel premium-glow">
+          <div class="popular-badge">Most Popular</div>
+          <h3 class="plan-name">Silver Plan</h3>
+          <div class="plan-price">₹300<span class="period">/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> 5 Internship Apps/month</li>
+            <li><i class="fa-solid fa-check"></i> Advanced Analytics</li>
+          </ul>
+          <button class="btn-primary plan-btn" onclick="initCheckout('Silver')">Upgrade to Silver</button>
+        </div>
+
+        <!-- Gold Plan -->
+        <div class="pricing-card glass-panel">
+          <h3 class="plan-name">Gold Plan</h3>
+          <div class="plan-price">₹1000<span class="period">/mo</span></div>
+          <ul class="plan-features">
+            <li><i class="fa-solid fa-check"></i> Unlimited Apps</li>
+            <li><i class="fa-solid fa-check"></i> 1-on-1 Mentorship</li>
+          </ul>
+          <button class="btn-primary plan-btn" onclick="initCheckout('Gold')">Upgrade to Gold</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>&copy; 2026 Elevance Internship Platform.</p>
+    </div>
+  </footer>
+
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="pricing.js"></script>
+</body>
+</html>

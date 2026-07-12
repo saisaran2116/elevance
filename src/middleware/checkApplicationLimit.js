@@ -1,23 +1,12 @@
 const { User } = require('../models');
 
-const PLANS = {
-  Free: { applications: 1 },
-  Bronze: { applications: 3 },
-  Silver: { applications: 5 },
-  Gold: { applications: -1 }, // -1 for unlimited
-};
+
 
 async function checkApplicationLimit(req, res, next) {
   try {
     const user = req.user; // Set by auth middleware
     if (!user) {
       return res.status(401).json({ error: 'Unauthorized' });
-    }
-
-    // Check if the plan is valid
-    const planConfig = PLANS[user.currentPlan || 'Free'];
-    if (!planConfig) {
-      return res.status(400).json({ error: 'Invalid subscription plan' });
     }
 
     // Reset logic: if it's been more than a month since last reset
@@ -34,7 +23,7 @@ async function checkApplicationLimit(req, res, next) {
     }
 
     // Check application limit (-1 means unlimited)
-    if (planConfig.applications !== -1 && user.monthlyApplicationsCount >= planConfig.applications) {
+    if (user.applicationsLimit !== -1 && user.monthlyApplicationsCount >= user.applicationsLimit) {
       return res.status(403).json({ 
         error: 'Application limit reached for your current plan.',
         upgradeUrl: '/pricing.html'

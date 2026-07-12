@@ -72,6 +72,7 @@ exports.verifyPayment = async (req, res) => {
     user.isPremium = true;
     user.currentPlan = planName;
     user.monthlyApplicationsCount = 0; // Reset count
+    user.applicationsLimit = PLANS[planName].applications;
     user.lastPlanResetDate = new Date();
     await user.save();
 

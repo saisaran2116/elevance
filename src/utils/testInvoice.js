@@ -12,6 +12,9 @@ async function run() {
   console.log('Saving to disk...');
   fs.writeFileSync('test_invoice.pdf', pdfBuffer);
   
+  console.log('Sending email...');
+  await emailService.sendInvoiceEmail(user, pdfBuffer);
+
   console.log('Done');
 }
 

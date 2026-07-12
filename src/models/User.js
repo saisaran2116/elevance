@@ -43,6 +43,10 @@ const User = sequelize.define('User', {
     type: DataTypes.INTEGER,
     defaultValue: 0,
   },
+  applicationsLimit: {
+    type: DataTypes.INTEGER,
+    defaultValue: 3, // Default for free/bronze or whatever
+  },
   lastPlanResetDate: {
     type: DataTypes.DATE,
     defaultValue: DataTypes.NOW,

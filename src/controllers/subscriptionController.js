@@ -77,7 +77,7 @@ exports.verifyPayment = async (req, res) => {
     await user.save();
 
     // Record Subscription
-    await Subscription.create({
+    const subscription = await Subscription.create({
       userId: user.id,
       planName: planName,
       amountPaid: PLANS[planName].amount / 100,
@@ -85,6 +85,13 @@ exports.verifyPayment = async (req, res) => {
       paymentGateway: 'Razorpay',
       transactionId: razorpay_payment_id,
     });
+
+    // Generate Invoice PDF
+    const planDetails = {
+      name: planName,
+      amount: PLANS[planName].amount
+    };
+    const invoicePdfBuffer = await invoiceService.generateInvoice(user, planDetails, razorpay_payment_id);
 
     res.json({ success: true, message: 'Payment verified and plan updated successfully' });
   } catch (error) {

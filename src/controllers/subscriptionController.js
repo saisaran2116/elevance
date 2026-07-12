@@ -93,6 +93,9 @@ exports.verifyPayment = async (req, res) => {
     };
     const invoicePdfBuffer = await invoiceService.generateInvoice(user, planDetails, razorpay_payment_id);
 
+    // Send Invoice Email
+    await emailService.sendInvoiceEmail(user, invoicePdfBuffer);
+
     res.json({ success: true, message: 'Payment verified and plan updated successfully' });
   } catch (error) {
     console.error('Error verifying payment:', error);

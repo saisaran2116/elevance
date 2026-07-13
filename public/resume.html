@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Resume Creation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .resume-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        .resume-form-group {
+            margin-bottom: 15px;
+        }
+        .resume-form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .resume-form-group input[type="text"],
+        .resume-form-group textarea,
+        .resume-form-group input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-premium {
+            background-color: #f39c12;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            width: 100%;
+        }
+        .btn-premium:hover {
+            background-color: #e67e22;
+        }
+        .hidden {
+            display: none;
+        }
+        #message {
+            margin-top: 15px;
+            color: green;
+        }
+        .error-message {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="resume-container">
+        <h2>Create Premium Resume (₹50)</h2>
+        <p>Showcase your profile with our premium resume builder.</p>
+        
+        <form id="resumeForm">
+            <div class="resume-form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" required>
+            </div>
+            <div class="resume-form-group">
+                <label for="qualifications">Qualifications</label>
+                <textarea id="qualifications" name="qualifications" rows="3" required></textarea>
+            </div>
+            <div class="resume-form-group">
+                <label for="experience">Experience</label>
+                <textarea id="experience" name="experience" rows="3" required></textarea>
+            </div>
+            <div class="resume-form-group">
+                <label for="personalInfo">Personal Info (Links, Contact)</label>
+                <textarea id="personalInfo" name="personalInfo" rows="3"></textarea>
+            </div>
+            <div class="resume-form-group">
+                <label for="photo">Upload Photo</label>
+                <input type="file" id="photo" name="photo" accept="image/*">
+            </div>
+
+            <!-- Initial state: Request OTP -->
+            <div id="requestOtpSection">
+                <p>To proceed to payment, please verify your email address.</p>
+                <button type="button" id="btnRequestOtp" class="btn-premium">Request OTP</button>
+            </div>
+
+            <!-- Secondary state: Verify OTP -->
+            <div id="verifyOtpSection" class="hidden">
+                <div class="resume-form-group">
+                    <label for="otp">Enter OTP</label>
+                    <input type="text" id="otp" name="otp" placeholder="123456">
+                </div>
+                <button type="button" id="btnVerifyOtp" class="btn-premium">Verify OTP & Pay ₹50</button>
+            </div>
+
+            <div id="message"></div>
+        </form>
+    </div>
+
+    <script src="resume.js"></script>
+</body>
+</html>

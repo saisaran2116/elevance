@@ -18,6 +18,7 @@ app.use(express.static('public'));
 
 const authRoutes = require('./routes/authRoutes');
 const subscriptionRoutes = require('./routes/subscriptionRoutes');
+const resumeRoutes = require('./routes/resumeRoutes');
 
 // Base Route
 app.get('/api/health', (req, res) => {
@@ -27,6 +28,7 @@ app.get('/api/health', (req, res) => {
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/subscription', subscriptionRoutes);
+app.use('/api/resume', resumeRoutes);
 
 // Sync Database and Start Server
 async function startServer() {

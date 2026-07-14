@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { requestOtp, verifyOtpAndSaveResume } = require('../controllers/resumeController');
+const { requestOtp, verifyOtpAndSaveResume, createPayment, verifyPaymentAndGenerateResume } = require('../controllers/resumeController');
 const { protect } = require('../middleware/authMiddleware');
 const multer = require('multer');
 
@@ -12,5 +12,11 @@ router.post('/request-otp', protect, requestOtp);
 
 // Verify OTP and save resume draft (protected route, requires login)
 router.post('/verify-otp', protect, upload.single('photo'), verifyOtpAndSaveResume);
+
+// Create Razorpay payment for resume
+router.post('/create-payment', protect, createPayment);
+
+// Verify Razorpay payment and generate PDF resume
+router.post('/verify-payment', protect, verifyPaymentAndGenerateResume);
 
 module.exports = router;

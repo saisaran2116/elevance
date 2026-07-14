@@ -14,13 +14,13 @@ exports.generateInvoice = (user, plan, transactionId) => {
 
       doc.fontSize(25).text('Invoice', { align: 'center' });
       doc.moveDown();
-      doc.fontSize(14).text(Transaction ID: ${transactionId});
-      doc.text(Date: ${new Date().toLocaleDateString()});
+      doc.fontSize(14).text(`Transaction ID: ${transactionId}`);
+      doc.text(`Date: ${new Date().toLocaleDateString()}`);
       doc.moveDown();
-      doc.text(Billed To: ${user.name} (${user.email}));
+      doc.text(`Billed To: ${user.name} (${user.email})`);
       doc.moveDown();
-      doc.text(Plan: ${plan.name});
-      doc.text(Amount Paid: Rs. ${plan.amount / 100});
+      doc.text(`Plan: ${plan.name}`);
+      doc.text(`Amount Paid: Rs. ${plan.amount / 100}`);
       
       doc.end();
     } catch (error) {

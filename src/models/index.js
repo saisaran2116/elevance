@@ -7,6 +7,8 @@ const Post = require('./Post');
 const OTP = require('./OTP');
 const Friend = require('./Friend');
 const PasswordReset = require('./PasswordReset');
+const Comment = require('./Comment');
+const Like = require('./Like');
 
 // Associations
 User.hasMany(LoginHistory, { foreignKey: 'userId', as: 'loginHistories' });
@@ -32,6 +34,18 @@ User.belongsToMany(User, {
   otherKey: 'friendId' 
 });
 
+Post.hasMany(Comment, { foreignKey: 'postId', as: 'comments' });
+Comment.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
+
+User.hasMany(Comment, { foreignKey: 'userId', as: 'comments' });
+Comment.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
+Post.hasMany(Like, { foreignKey: 'postId', as: 'likes' });
+Like.belongsTo(Post, { foreignKey: 'postId', as: 'post' });
+
+User.hasMany(Like, { foreignKey: 'userId', as: 'likes' });
+Like.belongsTo(User, { foreignKey: 'userId', as: 'user' });
+
 module.exports = {
   sequelize,
   User,
@@ -41,5 +55,7 @@ module.exports = {
   Post,
   OTP,
   Friend,
-  PasswordReset
+  PasswordReset,
+  Comment,
+  Like
 };

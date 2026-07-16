@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Space - Elevance</title>
+    <link rel="stylesheet" href="/css/public-space.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <a href="/" class="logo">Elevance</a>
+            <div class="nav-links">
+                <a href="/dashboard.html">Dashboard</a>
+                <a href="/public-space.html" class="active">Public Space</a>
+                <a href="#" id="logoutBtn">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="public-space-container">
+        <!-- Error / Notification Area -->
+        <div id="notification-area" class="notification-area hidden"></div>
+
+        <!-- Create Post Section -->
+        <section class="create-post-section glassmorphism">
+            <div class="create-post-header">
+                <div class="user-avatar-placeholder">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <h3>Share Something with the Community</h3>
+            </div>
+            <form id="create-post-form">
+                <textarea id="post-content" placeholder="What's on your mind? Share your thoughts, photos, or videos..." required></textarea>
+                
+                <div class="media-upload-area">
+                    <label for="media-url" class="media-label"><i class="fa-solid fa-link"></i> Media URL (Optional):</label>
+                    <input type="url" id="media-url" placeholder="https://example.com/image.jpg">
+                    
+                    <label for="media-type" class="media-label"><i class="fa-solid fa-photo-film"></i> Media Type:</label>
+                    <select id="media-type">
+                        <option value="none">None</option>
+                        <option value="image">Image</option>
+                        <option value="video">Video</option>
+                    </select>
+                </div>
+                
+                <div class="form-actions">
+                    <span class="posting-limits-info" id="posting-limits-info">
+                        <i class="fa-solid fa-circle-info"></i> Checking your posting limits...
+                    </span>
+                    <button type="submit" class="btn-primary" id="submit-post-btn">
+                        <i class="fa-solid fa-paper-plane"></i> Post
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <!-- Feed Section -->
+        <section class="feed-section" id="feed-container">
+            <!-- Posts will be dynamically injected here -->
+            <div class="loading-spinner">
+                <i class="fa-solid fa-spinner fa-spin"></i> Loading posts...
+            </div>
+        </section>
+    </main>
+
+    <script src="/js/public-space.js"></script>
+</body>
+</html>

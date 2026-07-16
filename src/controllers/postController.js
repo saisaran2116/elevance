@@ -1,4 +1,4 @@
-const { Post, Friend } = require('../models');
+const { Post, Friend, User, Like, Comment } = require('../models');
 const { Op } = require('sequelize');
 
 exports.createPost = async (req, res) => {
@@ -64,10 +64,71 @@ exports.createPost = async (req, res) => {
 exports.getPosts = async (req, res) => {
   try {
     const posts = await Post.findAll({
-      order: [['createdAt', 'DESC']]
+      order: [['createdAt', 'DESC']],
+      include: [
+        { model: User, as: 'user', attributes: ['id', 'username', 'email'] },
+        { model: Like, as: 'likes' },
+        { 
+          model: Comment, 
+          as: 'comments',
+          include: [{ model: User, as: 'user', attributes: ['id', 'username'] }]
+        }
+      ]
     });
     res.json(posts);
   } catch (error) {
     res.status(500).json({ message: 'Error fetching posts', error: error.message });
+  }
+};
+
+exports.likePost = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const postId = req.params.id;
+
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    const existingLike = await Like.findOne({ where: { userId, postId } });
+    if (existingLike) {
+      // Unlike
+      await existingLike.destroy();
+      return res.json({ message: 'Post unliked successfully' });
+    } else {
+      // Like
+      await Like.create({ userId, postId });
+      return res.json({ message: 'Post liked successfully' });
+    }
+  } catch (error) {
+    res.status(500).json({ message: 'Error toggling like', error: error.message });
+  }
+};
+
+exports.commentPost = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const postId = req.params.id;
+    const { content } = req.body;
+
+    const post = await Post.findByPk(postId);
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+
+    const newComment = await Comment.create({
+      userId,
+      postId,
+      content
+    });
+
+    const commentWithUser = await Comment.findByPk(newComment.id, {
+      include: [{ model: User, as: 'user', attributes: ['id', 'username'] }]
+    });
+
+    res.status(201).json({ message: 'Comment added successfully', comment: commentWithUser });
+  } catch (error) {
+    res.status(500).json({ message: 'Error adding comment', error: error.message });
   }
 };

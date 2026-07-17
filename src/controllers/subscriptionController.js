@@ -16,8 +16,32 @@ const PLANS = {
   Gold: { amount: 1000 * 100, applications: -1 }, // ₹1000 (-1 for unlimited)
 };
 
+// Helper to check if current time is within 10:00 AM to 11:00 AM IST
+function isWithinSubscriptionWindow() {
+  const now = new Date();
+  const formatter = new Intl.DateTimeFormat('en-US', {
+    timeZone: 'Asia/Kolkata',
+    hour12: false,
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric'
+  });
+  const formattedString = formatter.format(now);
+  const [hours, minutes, seconds] = formattedString.split(':').map(Number);
+  
+  const totalSeconds = (hours * 3600) + (minutes * 60) + seconds;
+  const startSeconds = 10 * 3600; // 10:00:00 AM
+  const endSeconds = 11 * 3600;   // 11:00:00 AM
+  
+  return totalSeconds >= startSeconds && totalSeconds <= endSeconds;
+}
+
 exports.createOrder = async (req, res) => {
   try {
+    if (!isWithinSubscriptionWindow()) {
+      return res.status(403).json({ error: 'Subscriptions can only be purchased between 10:00 AM and 11:00 AM IST.' });
+    }
+
     const { planName } = req.body;
     
     if (!PLANS[planName]) {

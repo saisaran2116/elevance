@@ -50,6 +50,7 @@ body {
     color: var(--text-main);
     text-decoration: none;
     background: linear-gradient(to right, #a855f7, #ec4899);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }

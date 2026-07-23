@@ -5,7 +5,7 @@ const { protect } = require('../middleware/authMiddleware');
 const multer = require('multer');
 
 // Configure multer for file uploads
-const upload = multer({ dest: 'uploads/' }); // simple setup for now
+const upload = multer({ dest: '/tmp/uploads/' }); // simple setup for now
 
 // Request OTP for resume creation (protected route, requires login)
 router.post('/request-otp', protect, requestOtp);

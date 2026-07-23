@@ -204,60 +204,20 @@ async function login(req, res) {
       });
     }
 
-    // Detect Google Chrome login to enforce OTP verification
-    if (browser === 'Chrome') {
-      const { generateOTP, sendEmail } = require('../utils/messagingService');
-      const otpCode = await generateOTP(user.email, 'email');
-      await sendEmail(
-        user.email,
-        'Your Elevance Login OTP',
-        `Your security verification OTP code is: ${otpCode}\n\nThis OTP is valid for 5 minutes.`
-      );
-
-      return res.status(200).json({
-        success: true,
-        requireOtp: true,
-        email: user.email,
-        message: 'Google Chrome login detected. An OTP has been sent to your email.',
-      });
-    }
-
-    // Record successful login history
-    await LoginHistory.create({
-      userId: user.id,
-      browser,
-      os,
-      device,
-      ipAddress,
-      status: 'Success',
-    });
-
-    // Generate Token
-    const token = generateToken(user.id);
-
-    // Cookie Options
-    const cookieOptions = {
-      expires: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000), // 30 days
-      httpOnly: true,
-    };
-    if (process.env.NODE_ENV === 'production') {
-      cookieOptions.secure = true;
-    }
-
-    res.cookie('token', token, cookieOptions);
+    // Always enforce OTP verification on login
+    const { generateOTP, sendEmail } = require('../utils/messagingService');
+    const otpCode = await generateOTP(user.email, 'email');
+    await sendEmail(
+      user.email,
+      'Your Elevance Login OTP',
+      `Your security verification OTP code is: ${otpCode}\n\nThis OTP is valid for 5 minutes.`
+    );
 
     return res.status(200).json({
       success: true,
-      token,
-      user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        phone: user.phone,
-        language: user.language,
-        isPremium: user.isPremium,
-        currentPlan: user.currentPlan,
-      },
+      requireOtp: true,
+      email: user.email,
+      message: 'An OTP has been sent to your email for verification.',
     });
   } catch (error) {
     console.error('Login error:', error);

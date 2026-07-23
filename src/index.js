@@ -42,9 +42,11 @@ async function startServer() {
     await sequelize.sync();
     console.log('Database synchronized successfully.');
 
-    app.listen(PORT, () => {
-      console.log(`Server is running on port ${PORT}`);
-    });
+    if (process.env.NODE_ENV !== 'production') {
+      app.listen(PORT, () => {
+        console.log(`Server is running on port ${PORT}`);
+      });
+    }
   } catch (error) {
     console.error('Unable to connect to the database:', error);
     process.exit(1);
@@ -52,3 +54,6 @@ async function startServer() {
 }
 
 startServer();
+
+// Export the app for Vercel
+module.exports = app;
